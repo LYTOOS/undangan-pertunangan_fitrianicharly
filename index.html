@@ -158,5 +158,19 @@ function openInvite(){
 }
 </script>
 
+<script>
+const galleryItems=document.querySelectorAll('.gallery-item img');
+
+window.addEventListener('scroll',()=>{
+galleryItems.forEach(img=>{
+const r=img.getBoundingClientRect();
+if(r.top<window.innerHeight && r.bottom>0){
+img.style.transform=`translateY(${(window.innerHeight-r.top)*0.04}px) scale(1.02)`;
+img.style.opacity=1;
+}
+});
+});
+</script>
+
 </body>
 </html>
