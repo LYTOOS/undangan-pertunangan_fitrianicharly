@@ -439,3 +439,42 @@ animation:ringPulse 3.5s ease-in-out infinite;
 50%{transform:scale(1.08)}
 }
 
+/* FLOATING MUSIC BUTTON */
+#music-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f5e6b8, #d4af37);
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(212,175,55,.6);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: 
+    opacity .4s ease,
+    transform .4s ease;
+}
+
+#music-btn.active {
+  opacity: 1;
+  pointer-events: auto;
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+#music-btn.paused {
+  animation-play-state: paused;
+  opacity: .75;
+}
