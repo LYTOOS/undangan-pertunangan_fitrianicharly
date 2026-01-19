@@ -17,3 +17,10 @@ document.getElementById("rsvpBtn").onclick=()=>{
 saveRSVP(guest);
 window.open("https://wa.me/6282261467360","_blank");
 };
+
+AOS.init({
+once:true,
+offset:120,
+easing:'ease-out-cubic'
+});
+
