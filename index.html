@@ -12,6 +12,8 @@
 
 <body>
 
+<body style="overflow:hidden">
+
 <!-- COVER -->
 <section id="cover">
   <div class="cover-box">
@@ -140,6 +142,20 @@ AOS.init({
   offset:120,
   easing:'ease-out-cubic'
 });
+</script>
+
+<script>
+function openInvite(){
+  document.getElementById("cover").style.display = "none";
+
+  const music = document.getElementById("music");
+  if(music){
+    music.volume = 0.7;
+    music.play().catch(()=>{});
+  }
+
+  document.body.style.overflow = "auto";
+}
 </script>
 
 </body>
