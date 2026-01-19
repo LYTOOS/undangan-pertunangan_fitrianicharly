@@ -478,3 +478,16 @@ animation:ringPulse 3.5s ease-in-out infinite;
   animation-play-state: paused;
   opacity: .75;
 }
+
+/* ISLAMIC SVG DIVIDER */
+.divider-svg {
+  display: flex;
+  justify-content: center;
+  margin: 38px 0;
+}
+
+.divider-svg img {
+  width: 180px;
+  opacity: .9;
+  filter: drop-shadow(0 0 12px rgba(212,175,55,.45));
+}
