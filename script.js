@@ -29,8 +29,13 @@ function toggleMusic(){
 // OPEN INVITE
 // =============================
 function openInvite(){
-  document.getElementById("cover").style.display="none";
-  document.body.style.overflow="auto";
+  document.getElementById("cover").classList.add("hide");
+  document.querySelector(".invite").style.display="block";
+  document.body.classList.remove("locked");
+
+  setTimeout(()=>{
+    document.getElementById("cover").style.display="none";
+  },1400);
 
   if(music){
     music.volume = 0.7;
