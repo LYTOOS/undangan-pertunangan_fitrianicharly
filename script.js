@@ -11,3 +11,13 @@ document.getElementById("rsvpBtn").onclick=()=>{
 saveRSVP(guest);
 window.open("https://wa.me/6282261467360");
 };
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const guest = params.get("to");
+
+if(guest){
+  document.getElementById("guestName").innerText =
+  decodeURIComponent(guest.replace(/\+/g," "));
+}
+</script>
