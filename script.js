@@ -9,6 +9,7 @@ decodeURIComponent(guest.replace(/\+/g," "));
 // === OPEN INVITATION ===
 function openInvite(){
 document.getElementById("cover").style.display="none";
+document.getElementById("cover").classList.add("hide");
 document.getElementById("music").play();
 }
 
