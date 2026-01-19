@@ -157,66 +157,12 @@
 </section>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
 <script>
-AOS.init({
-  once:true,
-  offset:120,
-  easing:'ease-out-cubic'
-});
+AOS.init({ once:true, offset:120, easing:'ease-out-cubic' });
 </script>
 
-<script>
-const galleryItems=document.querySelectorAll('.gallery-item img');
+<script src="script.js"></script>
 
-window.addEventListener('scroll',()=>{
-galleryItems.forEach(img=>{
-const r=img.getBoundingClientRect();
-if(r.top<window.innerHeight && r.bottom>0){
-img.style.transform=`translateY(${(window.innerHeight-r.top)*0.04}px) scale(1.02)`;
-img.style.opacity=1;
-}
-});
-});
-</script>
-
-<script>
-const heroImg=document.querySelector('.hero img');
-
-window.addEventListener('scroll',()=>{
-const s=window.scrollY;
-heroImg.style.transform=`translateY(${s*0.12}px) scale(1.08)`;
-});
-</script>
-
-<script>
-const music = document.getElementById("music");
-const musicBtn = document.getElementById("music-btn");
-
-function toggleMusic(){
-  if(music.paused){
-    music.play();
-    musicBtn.classList.remove("paused");
-  }else{
-    music.pause();
-    musicBtn.classList.add("paused");
-  }
-}
-
-function openInvite(){
-  document.getElementById("cover").style.display="none";
-  document.body.style.overflow="auto";
-
-  if(music){
-    music.volume = 0.7;
-    music.play().catch(()=>{});
-  }
-
-  musicBtn.classList.add("active");
-}
-</script>
-
-<!-- MUSIC BUTTON -->
 <div id="music-btn" onclick="toggleMusic()">♪</div>
 
 </body>
