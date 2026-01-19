@@ -1,10 +1,12 @@
 // === AMBIL NAMA TAMU ===
 const params = new URLSearchParams(window.location.search);
-const guest =
-params.get("to") || params.get("tamu") || "Tamu Undangan";
+const guestName =
+  params.get("to")
+  ? decodeURIComponent(params.get("to").replace(/\+/g," "))
+  : "Tamu Undangan";
 
-document.getElementById("guestName").innerText =
-decodeURIComponent(guest.replace(/\+/g," "));
+const guestEl = document.getElementById("guestName");
+if(guestEl) guestEl.innerText = guestName;
 
 // === OPEN INVITATION ===
 function openInvite(){
@@ -13,15 +15,32 @@ document.getElementById("cover").classList.add("hide");
 document.getElementById("music").play();
 }
 
-// === RSVP WHATSAPP ===
-document.getElementById("rsvpBtn").onclick=()=>{
-saveRSVP(guest);
-window.open("https://wa.me/6282261467360","_blank");
-};
+// RSVP WhatsApp
+const rsvpBtn = document.getElementById("rsvpBtn");
+if(rsvpBtn){
+  rsvpBtn.onclick = () => {
+    const phone = "6282261467360"; // GANTI nomor WA kamu
+    const text = `
+Assalamu’alaikum Warahmatullahi Wabarakatuh
+
+Saya *${guestName}* menyatakan:
+
+☑️ Akan menghadiri acara tunangan
+Fitriani & Charly Handani
+🗓 Minggu, 15 Februari 2026
+
+Terima kasih 🙏
+`.trim();
+
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,
+      "_blank"
+    );
+  };
+}
 
 AOS.init({
 once:true,
 offset:120,
 easing:'ease-out-cubic'
 });
-
