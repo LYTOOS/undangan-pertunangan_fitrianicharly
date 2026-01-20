@@ -106,6 +106,9 @@ document.addEventListener("DOMContentLoaded",()=>{
   setInterval(()=>{
     const now = new Date().getTime();
     const diff = target - now;
+    tickSound.currentTime = 0;
+    tickSound.play().catch(()=>{});
+
 
     if(diff <= 0) return;
 
@@ -115,3 +118,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     s.innerText = Math.floor((diff % (1000*60)) / 1000);
   },1000);
 });
+
+// TICK SOUND
+const tickSound = new Audio("audio/tick.mp3");
+tickSound.volume = 0.25;
