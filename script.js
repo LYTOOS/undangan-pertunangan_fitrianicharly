@@ -29,14 +29,29 @@ function toggleMusic(){
 // OPEN INVITE
 // =============================
 function openInvite(){
-  document.getElementById("cover").classList.add("hide");
-  document.querySelector(".invite").style.display="block";
+  const cover = document.getElementById("cover");
+  const invite = document.querySelector(".invite");
+
+  // tampilkan undangan
+  invite.style.display = "block";
+
+  // unlock scroll
   document.body.classList.remove("locked");
 
+  // animasi tutup cover
+  cover.classList.add("hide");
+
+  // refresh AOS setelah DOM tampil
   setTimeout(()=>{
-    document.getElementById("cover").style.display="none";
+    AOS.refreshHard();
+  },300);
+
+  // hapus cover total
+  setTimeout(()=>{
+    cover.style.display = "none";
   },1400);
 
+  // musik
   if(music){
     music.volume = 0.7;
     music.play().catch(()=>{});
