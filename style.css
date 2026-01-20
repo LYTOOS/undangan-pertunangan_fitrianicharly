@@ -530,6 +530,12 @@ box-shadow:var(--shadow-soft);
   pointer-events:none;
 }
 
+#music-btn span{
+  font-size:18px;
+  font-weight:700;
+  pointer-events:none;
+}
+
 #music-btn.active{
   opacity:1;
   pointer-events:auto;
