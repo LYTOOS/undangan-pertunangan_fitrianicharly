@@ -22,11 +22,13 @@ body.locked {
 
 .invite{
   opacity:0;
+  display:none;
   transform:translateY(20px);
   transition:.8s ease;
 }
 .invite.show{
   opacity:1;
+  display:block;
   transform:none;
 }
 
