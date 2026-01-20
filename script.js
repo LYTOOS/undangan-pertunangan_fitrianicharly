@@ -19,9 +19,11 @@ function toggleMusic(){
   if(music.paused){
     music.play();
     musicBtn.classList.remove("paused");
+    document.getElementById("music-icon").innerText = "❚❚";
   }else{
     music.pause();
     musicBtn.classList.add("paused");
+    document.getElementById("music-icon").innerText = "▶";
   }
 }
 
