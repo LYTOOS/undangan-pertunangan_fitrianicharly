@@ -256,6 +256,14 @@ margin:-20px 0;
   overflow:hidden;
   border-radius:18px;
   box-shadow:0 20px 40px rgba(0,0,0,.45);
+  opacity:0;
+  transform:translateY(60px) scale(.96);
+  transition:1s ease;
+}
+
+.gallery-item.aos-animate{
+  opacity:1;
+  transform:none;
 }
 
 .gallery-item[data-aos]{
