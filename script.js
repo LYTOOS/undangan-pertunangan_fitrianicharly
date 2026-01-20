@@ -16,14 +16,16 @@ const music = document.getElementById("music");
 const musicBtn = document.getElementById("music-btn");
 
 function toggleMusic(){
+  const icon = document.getElementById("music-icon");
+
   if(music.paused){
     music.play();
+    icon.innerHTML="❚❚";
     musicBtn.classList.remove("paused");
-    document.getElementById("music-icon").innerText = "❚❚";
   }else{
     music.pause();
+    icon.innerHTML="▶";
     musicBtn.classList.add("paused");
-    document.getElementById("music-icon").innerText = "▶";
   }
 }
 
@@ -34,28 +36,19 @@ function openInvite(){
   const cover = document.getElementById("cover");
   const invite = document.querySelector(".invite");
 
-  // tampilkan undangan
-  invite.style.display = "block";
-
-  // unlock scroll
-  document.body.classList.remove("locked");
-
-  // animasi tutup cover
   cover.classList.add("hide");
 
-  // refresh AOS setelah DOM tampil
   setTimeout(()=>{
-    AOS.refreshHard();
-  },300);
+    cover.style.display="none";
+    invite.classList.add("show");
 
-  // hapus cover total
-  setTimeout(()=>{
-    cover.style.display = "none";
-  },1400);
+    AOS.refresh();
+  },1200);
 
-  // musik
+  document.body.classList.remove("locked");
+
   if(music){
-    music.volume = 0.7;
+    music.volume=0.7;
     music.play().catch(()=>{});
   }
 
