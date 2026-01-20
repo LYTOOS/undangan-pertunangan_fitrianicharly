@@ -251,6 +251,14 @@ margin:-20px 0;
   box-shadow:0 20px 40px rgba(0,0,0,.45);
 }
 
+.gallery-item[data-aos]{
+  opacity:0;
+}
+
+.gallery-item[data-aos].aos-animate{
+  opacity:1;
+}
+
 .gallery-item[data-aos].aos-animate img{
   opacity:1;
   transform:none;
@@ -373,18 +381,6 @@ letter-spacing:1px;
 /* Section spacing rhythm */
 .section{
 padding:130px 22px;
-animation:fadeUp .8s ease both;
-}
-
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(12px);
-}
-to{
-opacity:1;
-transform:none;
-}
 }
 
 .section > *{
@@ -483,13 +479,15 @@ box-shadow:var(--shadow-soft);
 
 @media(max-width:600px){
   .couple-photo{
-    flex-wrap:nowrap;
+    flex-direction:row;
+    gap:16px;
   }
 
   .person img{
     width:120px;
     height:160px;
   }
+}
 
   .ring-wrap img{
     width:48px;
@@ -545,12 +543,6 @@ box-shadow:var(--shadow-soft);
   opacity: .9;
   filter: drop-shadow(0 0 12px rgba(212,175,55,.45));
 }
-
-@media(max-width:600px){
-  .couple-photo{
-    flex-direction:column;
-    gap:18px;
-  }
 
   .hero-text h1{
     font-size:42px;
