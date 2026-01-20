@@ -326,6 +326,15 @@ margin:-20px 0;
   }
 }
 
+[data-aos]{
+  opacity:0;
+  transform:none;
+}
+
+[data-aos].aos-animate{
+  opacity:1;
+}
+
 .and{
 font-size:30px;
 color:var(--gold);
