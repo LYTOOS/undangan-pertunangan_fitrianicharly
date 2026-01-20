@@ -63,7 +63,6 @@ function openInvite(){
   }
 }
 
-
 // =============================
 // RSVP WHATSAPP
 // =============================
@@ -90,29 +89,29 @@ Terima kasih 🙏
   };
 }
 
-
 // =============================
-// COUNTDOWN (SATU KALI SAJA)
+// COUNTDOWN 15 FEBRUARI 2026
 // =============================
-document.addEventListener("DOMContentLoaded", ()=>{
+document.addEventListener("DOMContentLoaded",()=>{
 
-  const targetDate = new Date("2026-02-15T00:00:00").getTime();
+  const target = new Date("2026-02-15T08:00:00").getTime();
+
+  const d = document.getElementById("cd-day");
+  const h = document.getElementById("cd-hour");
+  const m = document.getElementById("cd-min");
+  const s = document.getElementById("cd-sec");
+
+  if(!d) return;
 
   setInterval(()=>{
     const now = new Date().getTime();
-    const diff = targetDate - now;
+    const diff = target - now;
 
     if(diff <= 0) return;
 
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-    const s = Math.floor((diff % (1000*60)) / 1000);
-
-    document.getElementById("cd-day").innerText = d;
-    document.getElementById("cd-hour").innerText = h;
-    document.getElementById("cd-min").innerText = m;
-    document.getElementById("cd-sec").innerText = s;
+    d.innerText = Math.floor(diff / (1000*60*60*24));
+    h.innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    m.innerText = Math.floor((diff % (1000*60*60)) / (1000*60));
+    s.innerText = Math.floor((diff % (1000*60)) / 1000);
   },1000);
-
 });
