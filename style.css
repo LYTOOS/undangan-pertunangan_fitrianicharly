@@ -266,6 +266,20 @@ margin:-20px 0;
   transform:none;
 }
 
+/* === ELEMENTOR STYLE SCROLL ANIMATION === */
+.gallery-item{
+  opacity:0;
+  transform:translateY(60px);
+  transition:
+    opacity .9s ease,
+    transform .9s cubic-bezier(.22,1,.36,1);
+}
+
+.gallery-item.aos-animate{
+  opacity:1;
+  transform:none;
+}
+
 .gallery-item[data-aos]{
   opacity:0;
 }
@@ -537,19 +551,18 @@ box-shadow:var(--shadow-soft);
 }
 
 #music-btn.active{
-  opacity:1;
-  pointer-events:auto;
-  animation:spin 6s linear infinite;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 20px rgba(212,175,55,.4);}
+  50%{box-shadow:0 0 35px rgba(212,175,55,.7);}
+  100%{box-shadow:0 0 20px rgba(212,175,55,.4);}
 }
 
 #music-btn.paused{
   animation-play-state:paused;
   opacity:.6;
-}
-
-@keyframes spin{
-  from{transform:rotate(0)}
-  to{transform:rotate(360deg)}
 }
 
 /* ISLAMIC SVG DIVIDER */
