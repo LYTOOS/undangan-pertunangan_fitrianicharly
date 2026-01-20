@@ -610,51 +610,90 @@ box-shadow:var(--shadow-soft);
 }
 
 /* =========================
-   COUNTDOWN PREMIUM
+   PREMIUM COUNTDOWN GOLD
 ========================= */
+
 .countdown{
   text-align:center;
+  background:
+    radial-gradient(circle at top,
+    rgba(212,175,55,.08),
+    transparent 70%);
+}
+
+.countdown h2{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  letter-spacing:1px;
 }
 
 .countdown-wrap{
-  margin-top:40px;
   display:flex;
   justify-content:center;
-  gap:20px;
+  gap:28px;
+  margin-top:50px;
   flex-wrap:wrap;
 }
 
 .cd-box{
   width:110px;
-  padding:26px 16px;
-  background:linear-gradient(180deg,#1b1b25,#0b0b0f);
+  height:120px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,215,160,.18),
+      rgba(255,215,160,.05)
+    );
+  border:1px solid rgba(212,175,55,.5);
   border-radius:22px;
-  box-shadow:0 25px 60px rgba(0,0,0,.6);
-  border:1px solid rgba(212,175,55,.35);
+  backdrop-filter:blur(10px);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:
+    0 0 35px rgba(212,175,55,.25),
+    inset 0 0 25px rgba(212,175,55,.15);
+
+  animation:floatSoft 4s ease-in-out infinite;
 }
 
+.cd-box:nth-child(2){animation-delay:.3s}
+.cd-box:nth-child(3){animation-delay:.6s}
+.cd-box:nth-child(4){animation-delay:.9s}
+
 .cd-box span{
-  display:block;
   font-family:'Playfair Display',serif;
   font-size:42px;
-  color:#f5e6b8;
-  text-shadow:0 0 18px rgba(212,175,55,.6);
+  font-weight:700;
+  color:#ffd87a;
+  text-shadow:
+    0 0 15px rgba(255,215,0,.6),
+    0 0 35px rgba(255,215,0,.4);
 }
 
 .cd-box small{
-  display:block;
-  margin-top:8px;
+  margin-top:6px;
+  font-size:12px;
   letter-spacing:2px;
-  font-size:11px;
-  color:#d4af37;
+  opacity:.8;
+  text-transform:uppercase;
+}
+
+@keyframes floatSoft{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
 @media(max-width:600px){
   .cd-box{
-    width:85px;
-    padding:20px 12px;
+    width:90px;
+    height:105px;
   }
+
   .cd-box span{
-    font-size:32px;
+    font-size:34px;
   }
 }
