@@ -77,7 +77,7 @@
 
 <!-- COUNTDOWN -->
 <section class="section countdown" data-aos="fade-up">
-  <h2 class="center">Menuju Hari Bahagia</h2>
+  <p class="muted center">MENUJU HARI BAHAGIA</p>
   <h2 class="center">Hitung Mundur Acara Tunangan</h2>
 
   <p id="eventStarted" style="display:none;font-family:Playfair Display,serif;
@@ -91,25 +91,10 @@
 
   <div class="countdown-wrap">
 
-    <div class="cd-box">
-      <span id="cd-day">0</span>
-      <small>Hari</small>
-    </div>
-
-    <div class="cd-box">
-      <span id="cd-hour">0</span>
-      <small>Jam</small>
-    </div>
-
-    <div class="cd-box">
-      <span id="cd-min">0</span>
-      <small>Menit</small>
-    </div>
-
-    <div class="cd-box">
-      <span id="cd-sec">0</span>
-      <small>Detik</small>
-    </div>
+    <div class="cd"><span id="d">00</span><small>Hari</small></div>
+    <div class="cd"><span id="h">00</span><small>Jam</small></div>
+    <div class="cd"><span id="m">00</span><small>Menit</small></div>
+    <div class="cd"><span id="s">00</span><small>Detik</small></div>
 
   </div>
 </section>
@@ -220,6 +205,16 @@ const observer = new IntersectionObserver(entries=>{
 },{ threshold:0.2 });
 
 reveals.forEach(el=>observer.observe(el));
+</script>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.querySelectorAll('.story-item img').forEach(img=>{
+    const rect = img.getBoundingClientRect();
+    const offset = rect.top / window.innerHeight;
+    img.style.transform = `translateY(${offset * 30}px)`;
+  });
+});
 </script>
 
 <script src="script.js"></script>
