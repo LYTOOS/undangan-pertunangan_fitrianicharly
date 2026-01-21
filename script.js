@@ -40,13 +40,19 @@ function openInvite(){
   const cover  = document.getElementById("cover");
   const invite = document.querySelector(".invite");
 
-  if(cover){
-    cover.style.display="none";
-  }
+  cover.classList.add("hide");
 
-  if(invite){
+  setTimeout(()=>{
+    cover.style.display="none";
+    invite.style.display="block";
     invite.classList.add("show");
-  }
+
+    // aktifkan semua animasi reveal
+    document.querySelectorAll('.reveal').forEach(el=>{
+      el.classList.add('show');
+    });
+
+  },800);
 
   if(music){
     music.volume = 0.7;
@@ -54,9 +60,9 @@ function openInvite(){
   }
 
   if(musicBtn){
-    musicBtn.style.opacity = "1";
-    musicBtn.style.pointerEvents = "auto";
+    musicBtn.classList.add("show","active");
   }
+}
 
   if(typeof AOS !== "undefined"){
     AOS.refresh();
@@ -112,7 +118,3 @@ setInterval(()=>{
     Math.floor((gap / 1000) % 60);
 },1000);
 });
-
-// TICK SOUND
-const tickSound = new Audio("audio/tick.mp3");
-tickSound.volume = 0.25;
