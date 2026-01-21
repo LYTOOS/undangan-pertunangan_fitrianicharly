@@ -25,7 +25,7 @@
       Dengan segala hormat, kami mengundang Anda
     </p>
     
-    <button id="openBtn">
+    <button onclick="openInvite()">
       Buka Undangan
     </button>
     
@@ -219,26 +219,41 @@
 </section>
 
 <script>
-const openBtn = document.getElementById('openBtn');
-const cover   = document.getElementById('cover');
-const invite  = document.querySelector('.invite');
-const music   = document.getElementById('music');
-const musicBtn= document.getElementById('music-btn');
-const icon    = document.getElementById('music-icon');
+const music    = document.getElementById('music');
+const musicBtn = document.getElementById('music-btn');
+const icon     = document.getElementById('music-icon');
 
-openBtn.addEventListener('click',()=>{
+function openInvite(){
 
   document.body.classList.remove('locked');
 
+  const cover  = document.getElementById('cover');
+  const invite = document.querySelector('.invite');
+
   cover.classList.add('hide');
 
-  invite.style.display='block';
-  setTimeout(()=>invite.classList.add('show'),300);
+  setTimeout(()=>{
+    cover.style.display='none';
+    invite.style.display='block';
+    invite.classList.add('show');
 
-  music.play();
-  musicBtn.classList.add('show','active');
+    // aktifkan reveal pertama
+    document.querySelectorAll('.reveal').forEach(el=>{
+      el.classList.add('show');
+    });
 
-});
+  },800);
+
+  if(music){
+    music.volume = 0.7;
+    music.play().catch(()=>{});
+  }
+
+  if(musicBtn){
+    musicBtn.classList.add('show','active');
+    icon.innerHTML = '❚❚';
+  }
+}
 
 /* TOGGLE MUSIC */
 musicBtn.addEventListener('click',()=>{
