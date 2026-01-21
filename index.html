@@ -7,7 +7,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 </head>
 
 <body class="locked">
@@ -122,26 +121,26 @@
 <!-- GALLERY -->
 <section class="section gallery-story">
   <p class="muted center">GALERI</p>
-  <h2 class="center" data-aos="fade-up">
+  <h2 class="center" story-item reveal >
     Kenangan Kami
   </h2>
 
-  <div class="story-item" data-aos="fade-up">
+  <div class="story-item reveal">
     <img src="foto/gal1.jpg">
     <p class="story-text">Awal pertemuan yang sederhana</p>
   </div>
 
-  <div class="story-item" data-aos="fade-left">
+  <div class="story-item reveal">
     <img src="foto/gal2.jpg">
     <p class="story-text">Perjalanan yang penuh doa</p>
   </div>
 
-  <div class="story-item" data-aos="fade-right">
+  <div class="story-item reveal">
     <img src="foto/gal3.jpg">
     <p class="story-text">Langkah menuju masa depan</p>
   </div>
 
-  <div class="story-item" data-aos="zoom-in">
+  <div class="story-item reveal">
     <img src="foto/gal4.jpg">
     <p class="story-text">Ikatan yang InsyaAllah abadi</p>
   </div>
@@ -222,38 +221,19 @@
   <span id="music-icon">❚❚</span>
 </div>
 
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-AOS.init({
-  once:true,
-  offset:120,
-  duration:1100,
-  easing:'ease-out-cubic'
-});
-</script>
+const revealItems = document.querySelectorAll('.reveal');
 
-<script>
-const reveals = document.querySelectorAll('.reveal');
-  
-const observer = new IntersectionObserver(entries=>{ 
- entries.forEach(entry=>{ 
-  if(entry.isIntersecting){ 
-    entry.target.classList.add('show'); 
-  } 
- }); 
-},{ threshold:0.2 }); 
-  
-reveals.forEach(el=>observer.observe(el)); 
-</script> 
-  
-<script> 
-window.addEventListener('scroll',()=>{ 
- document.querySelectorAll('.story-item img').forEach(img=>{ 
-  const rect = img.getBoundingClientRect(); 
-  const offset = rect.top / window.innerHeight; 
-  img.style.transform = translateY(${offset * 30}px); 
- }); 
-}); 
+const revealObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.18});
+
+revealItems.forEach(el=>revealObserver.observe(el));
 </script>
 
 <script src="script.js"></script>
