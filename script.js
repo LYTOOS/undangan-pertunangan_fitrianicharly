@@ -94,33 +94,23 @@ Terima kasih 🙏
 // =============================
 document.addEventListener("DOMContentLoaded",()=>{
 
-  const target = new Date("2026-02-15T08:00:00").getTime();
+  const target = new Date("2026-02-15T00:00:00").getTime();
 
-  const d = document.getElementById("cd-day");
-  const h = document.getElementById("cd-hour");
-  const m = document.getElementById("cd-min");
-  const s = document.getElementById("cd-sec");
+setInterval(()=>{
+  const now = new Date().getTime();
+  const gap = target - now;
 
-  if(!d) return;
+  if(gap < 0) return;
 
-  setInterval(()=>{
-    const now = new Date().getTime();
-    const diff = target - now;
-    tickSound.currentTime = 0;
-    tickSound.play().catch(()=>{});
-
-
-    if(diff <= 0){
-      document.querySelector(".countdown-wrap").style.display="none";
-      document.getElementById("eventStarted").style.display="block";
-      return;
-    }
-
-    d.innerText = Math.floor(diff / (1000*60*60*24));
-    h.innerText = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-    m.innerText = Math.floor((diff % (1000*60*60)) / (1000*60));
-    s.innerText = Math.floor((diff % (1000*60)) / 1000);
-  },1000);
+  document.getElementById("d").innerText =
+    Math.floor(gap / (1000*60*60*24));
+  document.getElementById("h").innerText =
+    Math.floor((gap / (1000*60*60)) % 24);
+  document.getElementById("m").innerText =
+    Math.floor((gap / (1000*60)) % 60);
+  document.getElementById("s").innerText =
+    Math.floor((gap / 1000) % 60);
+},1000);
 });
 
 // TICK SOUND
