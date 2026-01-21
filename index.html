@@ -28,25 +28,28 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img src="foto/hero.jpg" alt="">
+  <img src="foto/hero.jpg">
   <div class="overlay"></div>
 
-  <h1 data-aos="fade-down" data-aos-delay="100">
-    Undangan Tunangan
-  </h1>
+  <div class="hero-text">
 
-  <h1 data-aos="zoom-in" data-aos-delay="300">
-    Fitriani & Charly
-  </h1>
+    <small data-aos="fade-down" data-aos-delay="100">
+      Undangan Tunangan
+    </small>
 
-  <p class="arabic" data-aos="fade-up" data-aos-delay="500">
-    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-  </p>
+    <h1 data-aos="zoom-in" data-aos-delay="300">
+      Fitriani <br>&<br> Charly
+    </h1>
 
-  <small data-aos="fade-up" data-aos-delay="700">
-    Minggu, 15 Februari 2026
-  </small>
+    <p class="arabic" data-aos="fade-up" data-aos-delay="500">
+      بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+    </p>
 
+    <p data-aos="fade-up" data-aos-delay="700">
+      Minggu, 15 Februari 2026
+    </p>>
+    
+  </div>
 </section>
 
 <!-- COUPLE -->
@@ -97,20 +100,22 @@
 
   <div class="countdown-wrap">
 
-  <div class="cd" data-aos="fade-up" data-aos-delay="100">
-    <span id="d"></span><small>Hari</small>
-  </div>
+      <div class="cd" data-aos="fade-up" data-aos-delay="100">
+        <span id="d"></span><small>Hari</small>
+      </div>
 
-  <div class="cd" data-aos="fade-up" data-aos-delay="250">
-    <span id="h"></span><small>Jam</small>
-  </div>
+      <div class="cd" data-aos="fade-up" data-aos-delay="250">
+        <span id="h"></span><small>Jam</small>
+      </div>
 
-  <div class="cd" data-aos="fade-up" data-aos-delay="400">
-    <span id="m"></span><small>Menit</small>
-  </div>
+      <div class="cd" data-aos="fade-up" data-aos-delay="400">
+        <span id="m"></span><small>Menit</small>
+      </div>
 
-  <div class="cd" data-aos="fade-up" data-aos-delay="550">
-    <span id="s"></span><small>Detik</small>
+      <div class="cd" data-aos="fade-up" data-aos-delay="550">
+        <span id="s"></span><small>Detik</small>
+      </div>
+
   </div>
 </section>
 
@@ -224,30 +229,6 @@ AOS.init({
   offset:120,
   duration:1100,
   easing:'ease-out-cubic'
-});
-</script>
-
-<script>
-const reveals = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-},{ threshold:0.2 });
-
-reveals.forEach(el=>observer.observe(el));
-</script>
-
-<script>
-window.addEventListener('scroll',()=>{
-  document.querySelectorAll('.story-item img').forEach(img=>{
-    const rect = img.getBoundingClientRect();
-    const offset = rect.top / window.innerHeight;
-    img.style.transform = `translateY(${offset * 30}px)`;
-  });
 });
 </script>
 
