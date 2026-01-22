@@ -788,98 +788,6 @@ box-shadow:var(--shadow-soft);
 }
 
 /* =========================
-   RSVP MODAL PREMIUM
-========================= */
-.rsvp-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.65);
-  backdrop-filter:blur(6px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:100001;
-}
-
-.rsvp-modal.show{
-  display:flex;
-}
-
-.rsvp-box{
-  background:linear-gradient(145deg,#14141c,#0b0b0f);
-  border-radius:28px;
-  padding:36px;
-  width:90%;
-  max-width:420px;
-  text-align:center;
-  box-shadow:0 40px 80px rgba(0,0,0,.6);
-}
-
-.rsvp-box h3{
-  font-family:'Playfair Display',serif;
-  font-size:24px;
-  margin-bottom:6px;
-}
-
-.rsvp-name{
-  color:#d4af37;
-  margin-bottom:18px;
-}
-
-.rsvp-option{
-  display:flex;
-  justify-content:center;
-  gap:22px;
-  margin:18px 0;
-}
-
-.rsvp-option label{
-  font-size:14px;
-}
-
-select, textarea{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid rgba(212,175,55,.35);
-  background:#0b0b0f;
-  color:#fff;
-  margin-bottom:14px;
-}
-
-textarea{
-  resize:none;
-  height:90px;
-}
-
-#rsvpBtn{
-  border:none;
-  width:100%;
-  position: relative;
-  z-index: 50;
-  pointer-events: auto;
-}
-
-#sendRSVP{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:16px;
-  background:linear-gradient(135deg,#f5e6b8,#d4af37);
-  font-weight:600;
-  cursor:pointer;
-}
-
-.close{
-  position:absolute;
-  top:18px;
-  right:22px;
-  font-size:26px;
-  cursor:pointer;
-  opacity:.7;
-}
-
-/* =========================
    GLOBAL LAYER HIERARCHY
 ========================= */
 
@@ -924,4 +832,98 @@ a,
 }
 #cover.hide{
   pointer-events:none;
+}
+
+/* =========================
+   RSVP MODAL PREMIUM
+========================= */
+
+.rsvp-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100001;
+}
+
+.rsvp-modal.show{
+  display:flex;
+}
+
+.rsvp-box{
+  width:90%;
+  max-width:420px;
+  background:
+    linear-gradient(145deg,#14141c,#0b0b0f);
+  border:1px solid rgba(212,175,55,.45);
+  border-radius:26px;
+  padding:36px 30px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);
+}
+
+.rsvp-box h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  color:#ffd700;
+  margin-bottom:8px;
+}
+
+.rsvp-box p{
+  font-size:14px;
+  opacity:.85;
+  margin-bottom:20px;
+}
+
+.rsvp-choice{
+  display:flex;
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.rsvp-choice button{
+  flex:1;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-weight:500;
+}
+
+.rsvp-choice button.active{
+  background:linear-gradient(135deg,#f5e6b8,#d4af37);
+  color:#111;
+}
+
+.rsvp-box textarea{
+  width:100%;
+  min-height:90px;
+  border-radius:14px;
+  padding:12px;
+  background:#0e0e14;
+  border:1px solid rgba(212,175,55,.35);
+  color:#fff;
+  margin-bottom:16px;
+}
+
+.send-btn{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  background:linear-gradient(135deg,#f5e6b8,#d4af37);
+  color:#111;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.close-btn{
+  background:none;
+  border:none;
+  color:#aaa;
+  font-size:14px;
 }
