@@ -32,7 +32,6 @@ function toggleMusic(){
   if(typeof AOS !== "undefined"){
     AOS.refresh();
   }
-}
 
 // =============================
 // REVEAL OBSERVER
