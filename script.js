@@ -147,6 +147,21 @@ function openInvite(){
     music.play().catch(()=>{});
   }
 
+  function toggleMusic(){
+  const music = document.getElementById("music");
+  const icon  = document.getElementById("music-icon");
+
+  if(!music) return;
+
+  if(music.paused){
+    music.play();
+    icon.innerHTML = "❚❚";
+  }else{
+    music.pause();
+    icon.innerHTML = "▶";
+  }
+}
+
   if(musicBtn){
     musicBtn.classList.add("show","active");
   }
