@@ -867,6 +867,7 @@ a,
 .rsvp-box,
 .rsvp-box *{
   pointer-events:auto;
+}
 
 .rsvp-box{
   width:90%;
