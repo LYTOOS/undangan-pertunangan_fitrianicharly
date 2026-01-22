@@ -136,11 +136,15 @@ function openInvite(){
 
   document.body.classList.remove("locked");
 
-  document.getElementById("cover").style.display = "none";
-  document.querySelector(".invite").classList.add("show");
+  const cover = document.getElementById("cover");
+  const invite = document.querySelector(".invite");
 
-  const music = document.getElementById("music");
-  const musicBtn = document.getElementById("music-btn");
+  cover.classList.add("hide");
+
+  setTimeout(()=>{
+    cover.style.display="none";
+    invite.classList.add("show");
+  },1200);
 
   if(music){
     music.volume = 0.7;
