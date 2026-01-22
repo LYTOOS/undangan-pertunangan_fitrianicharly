@@ -47,23 +47,40 @@ body.locked{
 
 .cover-box{
   text-align:center;
-  padding:60px 40px;
+  padding:64px 44px;
   max-width:420px;
   width:90%;
-  background:rgba(12,12,18,.75);
-  backdrop-filter:blur(18px);
+  background:
+    linear-gradient(145deg,
+      rgba(20,20,28,.88),
+      rgba(10,10,14,.88));
+  backdrop-filter:blur(20px);
   border-radius:32px;
-  box-shadow:0 40px 90px rgba(0,0,0,.7);
+  box-shadow:
+    0 0 60px rgba(212,175,55,.25),
+    0 40px 90px rgba(0,0,0,.7);
   animation:coverIn 1.2s ease;
   position:relative;
-  z-index:2;
+  z-index:5;
 }
 
+/* GOLD FRAME */
+.cover-box::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border-radius:26px;
+  border:1px solid rgba(212,175,55,.45);
+  pointer-events:none;
+}
+
+/* GUEST NAME */
 .cover-box h1{
   font-family:'Playfair Display',serif;
-  font-size:32px;
+  font-size:34px;
   letter-spacing:1px;
-  margin:20px 0;
+  margin:22px 0;
+  color:#ffd87a;
 }
 
 .cover-box button{
@@ -108,6 +125,40 @@ body.locked{
     transform:scale(1.15);
     pointer-events:none;
   }
+}
+
+/* =========================
+   GATE LEFT & RIGHT
+========================= */
+.gate{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  background:
+    radial-gradient(circle at center,
+      rgba(212,175,55,.15),
+      #07070b 70%);
+  z-index:1;
+  transition:transform 1.4s cubic-bezier(.77,0,.18,1);
+}
+
+.gate-left{
+  left:0;
+  border-right:1px solid rgba(212,175,55,.25);
+}
+
+.gate-right{
+  right:0;
+  border-left:1px solid rgba(212,175,55,.25);
+}
+
+/* GATE OPEN */
+#cover.hide .gate-left{
+  transform:translateX(-100%);
+}
+#cover.hide .gate-right{
+  transform:translateX(100%);
 }
 
 /* ===== CINEMATIC HERO PREMIUM ===== */
