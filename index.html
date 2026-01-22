@@ -32,6 +32,8 @@
   </div>
 </section>
 
+<div class="invite">
+
 <audio id="music" src="audio/backsound.mp3" loop></audio>
 
 <div id="music-btn" onclick="toggleMusic()">
@@ -218,71 +220,6 @@
   </div>
 </section>
 
-<script>
-const music    = document.getElementById('music');
-const musicBtn = document.getElementById('music-btn');
-const icon     = document.getElementById('music-icon');
-
-function openInvite(){
-
-  document.body.classList.remove('locked');
-
-  const cover  = document.getElementById('cover');
-  const invite = document.querySelector('.invite');
-
-  cover.classList.add('hide');
-
-  setTimeout(()=>{
-    cover.style.display='none';
-    invite.style.display='block';
-    invite.classList.add('show');
-
-    // aktifkan reveal pertama
-    document.querySelectorAll('.reveal').forEach(el=>{
-      el.classList.add('show');
-    });
-
-  },800);
-
-  if(music){
-    music.volume = 0.7;
-    music.play().catch(()=>{});
-  }
-
-  if(musicBtn){
-    musicBtn.classList.add('show','active');
-    icon.innerHTML = '❚❚';
-  }
-}
-
-/* TOGGLE MUSIC */
-musicBtn.addEventListener('click',()=>{
-  if(music.paused){
-    music.play();
-    icon.innerHTML='❚❚';
-    musicBtn.classList.remove('paused');
-  }else{
-    music.pause();
-    icon.innerHTML='▶';
-    musicBtn.classList.add('paused');
-  }
-});
-</script>
-
-<script>
-const reveals = document.querySelectorAll('.reveal');
-
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-},{ threshold:0.2 });
-
-reveals.forEach(el=>observer.observe(el));
-</script>
-
 <!-- RSVP MODAL -->
 <div id="rsvpModal" class="rsvp-modal">
   <div class="rsvp-box reveal reveal-zoom">
@@ -302,6 +239,21 @@ reveals.forEach(el=>observer.observe(el));
 
   </div>
 </div>
+</div>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+},{ threshold:0.2 });
+
+reveals.forEach(el=>observer.observe(el));
+</script>
 
 <script src="script.js"></script>
 
