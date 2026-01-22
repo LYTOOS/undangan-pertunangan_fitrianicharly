@@ -203,6 +203,11 @@ border-radius:28px;
 padding:40px;
 }
 
+.card.detail{
+  position: relative;
+  z-index: 40;
+}
+
 .couple{
 display:flex;
 justify-content:space-between;
@@ -845,6 +850,12 @@ select, textarea{
 textarea{
   resize:none;
   height:90px;
+}
+
+#rsvpBtn{
+  position: relative;
+  z-index: 50;
+  pointer-events: auto;
 }
 
 #sendRSVP{
