@@ -288,30 +288,17 @@ reveals.forEach(el=>observer.observe(el));
   <div class="rsvp-box reveal reveal-zoom">
 
     <h3>Konfirmasi Kehadiran</h3>
-    <p class="rsvp-name" id="rsvpGuest"></p>
+    <p id="rsvpName">Kepada Yth.</p>
 
-    <div class="rsvp-option">
-      <label>
-        <input type="radio" name="status" value="Hadir" checked>
-        Hadir
-      </label>
-      <label>
-        <input type="radio" name="status" value="Tidak Hadir">
-        Tidak Hadir
-      </label>
+    <div class="rsvp-choice">
+      <button data-status="Hadir">Hadir</button>
+      <button data-status="Berhalangan">Berhalangan</button>
     </div>
 
-    <select id="guestCount">
-      <option value="1">1 Orang</option>
-      <option value="2">2 Orang</option>
-      <option value="3">3 Orang</option>
-      <option value="4">4 Orang</option>
-    </select>
+    <textarea id="rsvpMessage" placeholder="Tulis doa / ucapan (opsional)"></textarea>
 
-    <textarea id="wish" placeholder="Ucapan / Doa (opsional)"></textarea>
-
-    <button id="sendRSVP">Kirim via WhatsApp</button>
-    <span class="close" onclick="closeRSVP()">×</span>
+    <button id="sendRSVP" class="send-btn">Kirim via WhatsApp</button>
+    <button class="close-btn" onclick="closeRSVP()">Tutup</button>
 
   </div>
 </div>
