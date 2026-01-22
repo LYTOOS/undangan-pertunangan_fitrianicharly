@@ -35,31 +35,37 @@ function toggleMusic(){
 }
 
 // =============================
-// RSVP WHATSAPP
+// RSVP WHATSAPP – PREMIUM
 // =============================
 const rsvpBtn = document.getElementById("rsvpBtn");
+
 if(rsvpBtn){
-  rsvpBtn.addEventListener("click", () => {
-    
-    const phone = "6282261467360";
-    
-    const text = `
+  rsvpBtn.addEventListener("click", ()=>{
+
+    const phone = "6282261467360"; // ganti nomor WA
+
+    const message = `
 Assalamu’alaikum Warahmatullahi Wabarakatuh
 
-Saya *${guestName}* menyatakan
-bersedia menghadiri acara tunangan:
+Dengan hormat,
 
-*Fitriani & Charly Handani*
+Saya *${guestName}* mengonfirmasi
+insyaAllah *berkenan hadir* pada acara
+*Tunangan Fitriani & Charly Handani*
+
 🗓 Minggu, 15 Februari 2026
 
+Semoga acara berjalan lancar dan diberkahi Allah SWT.
+
 Terima kasih 🙏
-`.trim();
+Wassalamu’alaikum Warahmatullahi Wabarakatuh
+    `.trim();
 
     window.open(
-      `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
       "_blank"
     );
-  };
+  });
 }
 
 // =============================
