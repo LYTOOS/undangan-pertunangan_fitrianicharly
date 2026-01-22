@@ -851,7 +851,13 @@ a,
   display:none;
   align-items:center;
   justify-content:center;
+  animation:fadeBg .4s ease;
   z-index:100001;
+}
+
+@keyframes fadeBg{
+  from{opacity:0}
+  to{opacity:1}
 }
 
 .rsvp-modal.show{
