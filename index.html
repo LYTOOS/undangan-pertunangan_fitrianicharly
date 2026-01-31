@@ -97,6 +97,17 @@ body.locked { overflow: hidden; height: 100vh; }
   line-height: 1;
 }
 
+.hero-names span {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: all 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active .hero-names span {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
 /* Slide from Left/Right for couples */
 .reveal-left {
   opacity: 0;
@@ -115,6 +126,25 @@ body.locked { overflow: hidden; height: 100vh; }
   transform: translateX(0) rotateY(0);
 }
 
+@media (max-width: 768px) {
+  .reveal-left, .reveal-right {
+    transform: translateY(60px) !important;
+  }
+}
+
+.reveal-soft {
+  opacity: 0;
+  transform: translateY(60px);
+  filter: blur(10px);
+  transition: all 1.5s ease;
+}
+
+.reveal-soft.active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
 /* Text Reveal with Masking */
 .text-reveal {
   overflow: hidden;
@@ -129,6 +159,19 @@ body.locked { overflow: hidden; height: 100vh; }
 }
 
 .active .text-reveal span {
+  transform: translateY(0);
+}
+
+.reveal-quote {
+  overflow: hidden;
+}
+
+.reveal-quote > * {
+  transform: translateY(120%);
+  transition: transform 1.4s cubic-bezier(0.19,1,0.22,1);
+}
+
+.reveal-quote.active > * {
   transform: translateY(0);
 }
 
@@ -253,6 +296,14 @@ body.locked { overflow: hidden; height: 100vh; }
   border-radius: 80px 80px 20px 20px;
   border: 2px solid var(--gold);
   padding: 8px;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all 1.2s cubic-bezier(0.16,1,0.3,1);
+}
+
+.active .person img {
+  transform: scale(1);
+  opacity: 1;
 }
 
 .person:hover img { transform: translateY(-20px) scale(1.05); border-color: #fff; }
@@ -480,7 +531,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     <!-- QURAN VERSE -->
     <section class="section" style="padding: 60px 20px;">
         <div class="reveal-container">
-            <div class="card reveal">
+            <div class="card reveal-quote">
                 <h2 class="text-mask">
                   <span>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
                 </h2>
@@ -523,7 +574,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     <!-- EVENT DETAILS -->
     <section class="section">
         <div class="reveal-container">
-            <div class="card reveal">
+            <div class="card reveal-soft">
                 <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: clamp(28px, 7vw, 40px);">Waktu & Lokasi</h2>
                 
                 <div class="event-grid stagger">
@@ -551,7 +602,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     <!-- RSVP SECTION -->
     <section class="section">
         <div class="reveal-container">
-            <div class="card reveal stagger">
+            <div class="card reveal-soft">
                 <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: clamp(28px, 7vw, 40px);">RSVP & Harapan</h2>
                 
                 <div style="margin-top: 30px; text-align: left;">
@@ -613,7 +664,7 @@ function initScrollReveal() {
         rootMargin: "0px 0px -100px 0px"
     });
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-quote')
 }
 
 // ==========================================
