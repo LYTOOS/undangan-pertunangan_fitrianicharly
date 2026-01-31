@@ -74,6 +74,29 @@ body.locked { overflow: hidden; height: 100vh; }
   transform: translateY(0) rotateX(0);
 }
 
+.hero-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.hero-names .name {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(50px, 16vw, 110px);
+  color: var(--gold-light);
+  line-height: 0.8;
+}
+
+.hero-names .amp {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(30px, 10vw, 60px);
+  color: var(--gold);
+  margin: 15px 0;
+  line-height: 1;
+}
+
 /* Slide from Left/Right for couples */
 .reveal-left {
   opacity: 0;
