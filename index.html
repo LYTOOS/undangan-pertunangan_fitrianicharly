@@ -12,7 +12,6 @@
 
 <style>
 :root {
-  --bg: #050507;
   --card: rgba(10, 10, 15, 0.85);
   --gold: #d4af37;
   --gold-light: #f5e6b8;
@@ -41,16 +40,13 @@ body.locked { overflow: hidden; height: 100vh; }
 
 /* Hero Photo Background - FIXED (Tidak Bergerak) */
 #hero-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -2;
-  background: linear-gradient(to bottom, rgba(5,5,7,0.4), rgba(5,5,7,0.95)), url('foto/hero.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5,5,7,0.2),
+      rgba(5,5,7,0.7)
+    ),
+    url('foto/hero.jpg');
 }
 
 /* Perspective Wrapper for 3D feel */
@@ -594,7 +590,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     <p class="amp">&</p>
     <h1 class="reveal-scale delay-1">Charly</h1>
 
-    <button id="openBtn" class="btn-open reveal-up delay-2">
+    <button id="openBtn" class="btn-open reveal-up delay-2" onclick="startInvitation()">
       BUKA UNDANGAN
     </button>
   </div>
@@ -811,7 +807,9 @@ function initScrollReveal() {
 // 2. INTERACTION & UTILS
 // ==========================================
 const params = new URLSearchParams(window.location.search);
-document.getElementById('guestName').innerText = params.get('to') || "Tamu Undangan";
+// document.getElementById('guestName').innerText = params.get('to') || "Tamu Undangan";
+
+document.getElementById("openBtn").addEventListener("click", startInvitation);
 
 function toggleMusic() {
     const audio = document.getElementById('bgMusic');
