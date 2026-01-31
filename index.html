@@ -8,14 +8,12 @@
 <!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Amiri&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-<!-- Libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 <style>
 :root {
   --bg: #050507;
-  --card: rgba(20, 20, 28, 0.7);
+  --card: rgba(10, 10, 15, 0.8);
   --gold: #d4af37;
   --gold-light: #f5e6b8;
   --text: #ffffff;
@@ -35,29 +33,89 @@ body {
 
 body.locked { overflow: hidden; height: 100vh; }
 
-/* 3D Canvas Background */
-#canvas-container {
+/* Hero Photo Background */
+#hero-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  pointer-events: none;
+  z-index: -2;
+  background: linear-gradient(to bottom, rgba(5,5,7,0.3), rgba(5,5,7,0.95)), url('foto/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease-out;
 }
 
-/* Animations */
+/* ==========================================
+   NEW ULTRA LUXE ANIMATIONS
+   ========================================== */
+
+/* Perspective Wrapper for 3D feel */
+.reveal-container {
+  perspective: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .reveal {
   opacity: 0;
-  transform: translateY(50px);
-  transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(100px) rotateX(-20deg) scale(0.9);
+  filter: blur(15px);
+  transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .reveal.active {
   opacity: 1;
+  transform: translateY(0) rotateX(0) scale(1);
+  filter: blur(0);
+}
+
+/* Slide from Left/Right for couples */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-100px) rotateY(20deg);
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(100px) rotateY(-20deg);
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.active .reveal-left, .active .reveal-right {
+  opacity: 1;
+  transform: translateX(0) rotateY(0);
+}
+
+/* Text Reveal with Masking */
+.text-reveal {
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+.text-reveal span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.active .text-reveal span {
   transform: translateY(0);
 }
 
-/* Cover System */
+/* Staggered Delay System */
+.delay-1 { transition-delay: 0.2s !important; }
+.delay-2 { transition-delay: 0.4s !important; }
+.delay-3 { transition-delay: 0.6s !important; }
+.delay-4 { transition-delay: 0.8s !important; }
+
+/* ==========================================
+   COVER & GATE
+   ========================================== */
 #cover {
   position: fixed;
   inset: 0;
@@ -66,51 +124,58 @@ body.locked { overflow: hidden; height: 100vh; }
   align-items: center;
   justify-content: center;
   background: #000;
-  transition: transform 1.5s cubic-bezier(0.77, 0, 0.18, 1);
 }
 
 .gate {
   position: absolute;
   top: 0; width: 50%; height: 100%;
   background: radial-gradient(circle at center, #1a1a24, #050507);
-  transition: transform 1.5s cubic-bezier(0.77, 0, 0.18, 1);
+  transition: transform 2s cubic-bezier(0.77, 0, 0.18, 1);
+  display: flex;
+  align-items: center;
 }
-.gate-left { left: 0; border-right: 1px solid var(--gold); }
-.gate-right { right: 0; border-left: 1px solid var(--gold); }
+.gate-left { left: 0; border-right: 1px solid var(--gold); justify-content: flex-end; }
+.gate-right { right: 0; border-left: 1px solid var(--gold); justify-content: flex-start; }
 
-#cover.open { transform: translateY(-100%); }
+#cover.open { pointer-events: none; opacity: 0; transition: 2s; }
+#cover.open .gate-left { transform: translateX(-100%); }
+#cover.open .gate-right { transform: translateX(100%); }
 
 .cover-content {
   position: relative;
   z-index: 10001;
   text-align: center;
   padding: 40px;
-  background: rgba(20, 20, 28, 0.85);
-  backdrop-filter: blur(15px);
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(25px);
   border: 1px solid var(--gold);
-  border-radius: 30px;
-  max-width: 400px;
+  border-radius: 40px;
+  max-width: 450px;
   width: 90%;
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
 }
 
 .btn-open {
   margin-top: 30px;
-  padding: 15px 40px;
+  padding: 18px 45px;
   border: none;
   border-radius: 50px;
   background: var(--ai-gradient);
   color: #000;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+  transition: 0.4s;
 }
 
-/* Sections UI */
+/* ==========================================
+   SECTIONS & CARDS
+   ========================================== */
 .section {
   min-height: 100vh;
-  padding: 100px 20px;
+  padding: 120px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,66 +185,70 @@ body.locked { overflow: hidden; height: 100vh; }
 
 .card {
   background: var(--card);
-  backdrop-filter: blur(10px);
-  padding: 50px 30px;
-  border-radius: 25px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  max-width: 800px;
+  backdrop-filter: blur(20px);
+  padding: 80px 50px;
+  border-radius: 40px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  max-width: 900px;
   width: 100%;
   text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
 }
 
 .hero h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: clamp(60px, 12vw, 100px);
+  font-size: clamp(70px, 18vw, 130px);
   color: var(--gold-light);
-  margin: 20px 0;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  margin: 10px 0;
+  line-height: 1;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.9);
 }
 
 .couple-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 50px;
   flex-wrap: wrap;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .person img {
-  width: 200px;
-  height: 280px;
+  width: 240px;
+  height: 340px;
   object-fit: cover;
-  border-radius: 100px 100px 20px 20px;
+  border-radius: 120px 120px 30px 30px;
   border: 2px solid var(--gold);
-  padding: 5px;
+  padding: 10px;
+  transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+.person:hover img { transform: translateY(-20px) scale(1.05); border-color: #fff; }
 
 .countdown-container {
   display: flex;
   gap: 20px;
   justify-content: center;
-  margin: 40px 0;
+  margin: 50px 0;
 }
 
 .cd-box {
   background: rgba(212, 175, 55, 0.1);
-  border: 1px solid var(--gold);
-  padding: 15px;
-  border-radius: 15px;
-  min-width: 80px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 25px;
+  border-radius: 25px;
+  min-width: 100px;
+  backdrop-filter: blur(10px);
 }
 
-.cd-box span { font-size: 30px; font-weight: 700; color: var(--gold); display: block; }
+.cd-box span { font-size: 38px; font-weight: 700; color: var(--gold); display: block; }
 
-/* Floating Music */
 #music-toggle {
   position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 50px;
-  height: 50px;
+  bottom: 30px;
+  right: 30px;
+  width: 65px;
+  height: 65px;
   background: var(--gold);
   border-radius: 50%;
   display: none;
@@ -188,57 +257,65 @@ body.locked { overflow: hidden; height: 100vh; }
   z-index: 1000;
   cursor: pointer;
   color: #000;
-  box-shadow: 0 0 15px var(--gold);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+  font-size: 24px;
 }
 
 /* AI RSVP */
 .ai-badge {
     background: var(--ai-gradient);
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
+    font-size: 11px;
+    padding: 5px 15px;
+    border-radius: 20px;
     color: #000;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-weight: 900;
+    margin-bottom: 20px;
     display: inline-block;
 }
 
 textarea {
     width: 100%;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid #444;
+    background: rgba(0,0,0,0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
     color: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    margin: 15px 0;
+    padding: 25px;
+    border-radius: 20px;
+    margin: 20px 0;
     font-family: inherit;
-}
-
-.btn-primary {
-    background: var(--gold);
-    color: #000;
-    padding: 15px 30px;
-    border-radius: 50px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    width: 100%;
+    font-size: 16px;
     transition: 0.3s;
 }
 
-.btn-primary:hover { transform: scale(1.02); filter: brightness(1.1); }
+textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
+
+.btn-primary {
+    background: var(--ai-gradient);
+    color: #000;
+    padding: 22px 35px;
+    border-radius: 60px;
+    border: none;
+    font-weight: 900;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.5s;
+    letter-spacing: 2px;
+    font-size: 16px;
+}
+
+.btn-primary:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5); }
+
 </style>
 </head>
 <body class="locked">
 
-<div id="canvas-container"></div>
+<div id="hero-bg"></div>
 
 <audio id="bgMusic" loop>
     <source src="audio/backsound.mp3" type="audio/mpeg">
 </audio>
 
 <div id="music-toggle" onclick="toggleMusic()">
-    <i class="fas fa-music"></i>
+    <i class="fas fa-compact-disc fa-spin"></i>
 </div>
 
 <!-- COVER -->
@@ -246,256 +323,251 @@ textarea {
     <div class="gate gate-left"></div>
     <div class="gate gate-right"></div>
     <div class="cover-content">
-        <p style="letter-spacing: 4px; font-size: 12px; color: var(--gold);">THE ENGAGEMENT OF</p>
-        <h1 style="font-family: 'Playfair Display'; font-size: 35px; margin: 15px 0;">Fitriani & Charly</h1>
-        <p class="muted">Kepada Yth:</p>
-        <h2 id="guestName" style="margin: 10px 0;">Tamu Undangan</h2>
-        <button class="btn-open" onclick="startInvitation()">Buka Undangan</button>
+        <p style="letter-spacing: 6px; font-size: 13px; color: var(--gold);" class="animate__animated animate__fadeIn">THE ENGAGEMENT OF</p>
+        <h1 style="font-family: 'Playfair Display'; font-size: 42px; margin: 25px 0;" class="animate__animated animate__zoomIn">Fitriani & Charly</h1>
+        <p class="muted animate__animated animate__fadeIn">Kepada Yth:</p>
+        <h2 id="guestName" style="margin: 15px 0; font-family: 'Playfair Display'; font-size: 28px;" class="animate__animated animate__fadeInUp">Tamu Undangan</h2>
+        <button class="btn-open animate__animated animate__pulse animate__infinite" onclick="startInvitation()">Buka Undangan</button>
     </div>
 </div>
 
 <!-- CONTENT -->
-<div id="main-content" style="opacity:0; visibility: hidden; transition: 1.5s;">
+<div id="main-content" style="opacity:0; visibility: hidden; transition: 2.5s;">
     
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="section hero">
-        <div class="reveal">
-            <p style="letter-spacing: 5px;">KAMI AKAN MENGIKAT JANJI</p>
-            <h1>Fitriani & Charly</h1>
-            <p style="font-size: 18px;">Minggu, 07 Februari 2026</p>
-            <div class="countdown-container" id="timer">
-                <div class="cd-box"><span id="days">00</span><small>HARI</small></div>
-                <div class="cd-box"><span id="hours">00</span><small>JAM</small></div>
-                <div class="cd-box"><span id="mins">00</span><small>MENIT</small></div>
-                <div class="cd-box"><span id="secs">00</span><small>DETIK</small></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- AYAT -->
-    <section class="section">
-        <div class="card reveal">
-            <p style="font-family: 'Amiri', serif; font-size: 26px; color: var(--gold);">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
-            <p style="font-style: italic; margin-top: 20px; line-height: 1.8; opacity: 0.9;">
-                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
-            </p>
-            <p style="font-weight: bold; margin-top: 10px; color: var(--gold);">(Ar-Rum: 21)</p>
-        </div>
-    </section>
-
-    <!-- COUPLE -->
-    <section class="section">
-        <div class="card reveal">
-            <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: 35px;">Mempelai</h2>
-            <p style="margin-bottom: 40px; font-size: 14px;">Assalamu'alaikum Wr. Wb. Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i ke acara pertunangan kami:</p>
-            
-            <div class="couple-wrap">
-                <div class="person">
-                    <img src="foto/fitriani.jpg" alt="Fitriani">
-                    <h3 style="font-family: 'Great Vibes'; font-size: 40px; color: var(--gold-light); margin: 15px 0 5px;">Fitriani</h3>
-                    <p style="font-size: 13px; color: var(--muted);">Putri Pertama dari</p>
-                    <p style="font-weight: 600;">Bpk. R. Supian & Ibu Suryanti</p>
-                </div>
-                <div style="font-size: 40px; color: var(--gold); font-family: 'Great Vibes';">&</div>
-                <div class="person">
-                    <img src="foto/charly.jpg" alt="Charly">
-                    <h3 style="font-family: 'Great Vibes'; font-size: 40px; color: var(--gold-light); margin: 15px 0 5px;">Charly</h3>
-                    <p style="font-size: 13px; color: var(--muted);">Putra Pertama dari</p>
-                    <p style="font-weight: 600;">Bpk. Zaili & Ibu Erni Wati</p>
+        <div class="reveal-container">
+            <div class="reveal">
+                <h3 class="text-reveal" style="letter-spacing: 10px; font-weight: 300; margin-bottom: 20px;"><span>KAMI AKAN MENGIKAT JANJI</span></h3>
+                <h1 class="delay-1">Fitriani & Charly</h1>
+                <p class="delay-2" style="font-size: 22px; letter-spacing: 4px; color: var(--gold-light);">07 . 02 . 2026</p>
+                
+                <div class="countdown-container delay-3" id="timer">
+                    <div class="cd-box"><span>00</span><small>HARI</small></div>
+                    <div class="cd-box"><span>00</span><small>JAM</small></div>
+                    <div class="cd-box"><span>00</span><small>MENIT</small></div>
+                    <div class="cd-box"><span>00</span><small>DETIK</small></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- EVENT -->
+    <!-- QURAN VERSE -->
     <section class="section">
-        <div class="card reveal">
-            <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: 30px;">Waktu & Tempat</h2>
-            <div style="margin: 30px 0;">
-                <i class="far fa-calendar-alt" style="font-size: 30px; color: var(--gold);"></i>
-                <h3 style="margin: 10px 0;">Minggu, 07 Februari 2026</h3>
-                <p>Pukul : 19.00 WIB - Selesai</p>
+        <div class="reveal-container">
+            <div class="card reveal">
+                <h2 class="text-reveal" style="font-family: 'Amiri', serif; font-size: 38px; color: var(--gold); margin-bottom: 40px;"><span>بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span></h2>
+                <p class="delay-1" style="font-style: italic; font-size: 20px; line-height: 2.2; opacity: 0.95; max-width: 750px; margin: 0 auto;">
+                    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
+                </p>
+                <h4 class="delay-2" style="margin-top: 35px; color: var(--gold); letter-spacing: 5px; font-weight: 700;">QS. AR-RUM: 21</h4>
             </div>
-            <div style="margin: 30px 0;">
-                <i class="fas fa-map-marker-alt" style="font-size: 30px; color: var(--gold);"></i>
-                <h3 style="margin: 10px 0;">Di Kediaman Wanita</h3>
-                <p style="font-size: 14px; opacity: 0.8;">Jalan Pendidikan, Concong Luar</p>
-            </div>
-            <iframe src="https://www.google.com/maps?q=-0.239052,103.635860&output=embed" style="width:100%; height:250px; border-radius:15px; border:0; filter: grayscale(1) invert(1);" allowfullscreen=""></iframe>
         </div>
     </section>
 
-    <!-- RSVP -->
+    <!-- COUPLE DETAILS -->
     <section class="section">
-        <div class="card reveal">
-            <h2 style="font-family: 'Playfair Display'; color: var(--gold);">RSVP & Ucapan</h2>
-            <p style="font-size: 14px; margin-bottom: 25px;">Kehadiran Anda adalah kado terindah bagi kami.</p>
-            
-            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--gold);">
-                <div class="ai-badge">SMART AI ASSISTANT</div>
-                <p style="font-size: 12px; margin-bottom: 10px;">Gunakan AI untuk merangkai ucapan indah otomatis:</p>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <select id="aiTone" style="flex:1; padding: 10px; border-radius: 5px; background: #222; color: #fff; border: 1px solid #444;">
-                        <option value="Islami">Religius</option>
-                        <option value="Puitis">Puitis</option>
-                        <option value="Santai">Akrab</option>
-                    </select>
-                    <button onclick="generateAI()" id="aiBtn" style="background: var(--ai-gradient); border:none; padding: 10px 20px; border-radius: 5px; cursor:pointer; font-weight: bold;">BUAT ✨</button>
+        <div class="reveal-container">
+            <div class="card reveal">
+                <h2 class="text-reveal" style="font-family: 'Playfair Display'; color: var(--gold); font-size: 55px;"><span>Mempelai</span></h2>
+                <p class="delay-1" style="margin-bottom: 60px; font-size: 16px; letter-spacing: 1px;">Assalamu'alaikum Wr. Wb. Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i ke acara pertunangan kami:</p>
+                
+                <div class="couple-wrap">
+                    <div class="person reveal-left delay-2">
+                        <img src="foto/fitriani.jpg" alt="Fitriani">
+                        <h3 style="font-family: 'Great Vibes'; font-size: 50px; color: var(--gold-light); margin: 25px 0 10px;">Fitriani</h3>
+                        <p style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 3px;">Putri Pertama dari</p>
+                        <p style="font-weight: 600; font-size: 20px;">Bpk. R. Supian & Ibu Suryanti</p>
+                    </div>
+                    
+                    <div class="delay-3" style="font-size: 60px; color: var(--gold); font-family: 'Great Vibes';">&</div>
+                    
+                    <div class="person reveal-right delay-2">
+                        <img src="foto/charly.jpg" alt="Charly">
+                        <h3 style="font-family: 'Great Vibes'; font-size: 50px; color: var(--gold-light); margin: 25px 0 10px;">Charly</h3>
+                        <p style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 3px;">Putra Pertama dari</p>
+                        <p style="font-weight: 600; font-size: 20px;">Bpk. Zaili & Ibu Erni Wati</p>
+                    </div>
                 </div>
-                <textarea id="rsvpMsg" rows="4" placeholder="Tulis ucapan Anda..."></textarea>
-                <button onclick="sendWA()" class="btn-primary"><i class="fab fa-whatsapp"></i> KIRIM KONFIRMASI</button>
             </div>
         </div>
     </section>
 
-    <footer style="padding: 50px 20px; text-align: center; opacity: 0.5; font-size: 12px;">
-        <p>&copy; 2026 Fitriani & Charly Engagement. All Rights Reserved.</p>
+    <!-- EVENT DETAILS -->
+    <section class="section">
+        <div class="reveal-container">
+            <div class="card reveal">
+                <h2 class="text-reveal" style="font-family: 'Playfair Display'; color: var(--gold); font-size: 45px;"><span>Waktu & Lokasi</span></h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px; margin-top: 60px;">
+                    <div class="delay-1">
+                        <div style="width: 85px; height: 85px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; background: rgba(212,175,55,0.05);">
+                            <i class="far fa-calendar-alt" style="font-size: 30px; color: var(--gold);"></i>
+                        </div>
+                        <h3 style="font-family: 'Playfair Display'; color: var(--gold-light); font-size: 24px;">Hari & Tanggal</h3>
+                        <p style="font-size: 20px; font-weight: 600;">Sabtu, 07 Februari 2026</p>
+                        <p style="font-size: 18px;">Pukul 19.00 WIB - Selesai</p>
+                    </div>
+                    
+                    <div class="delay-2">
+                        <div style="width: 85px; height: 85px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; background: rgba(212,175,55,0.05);">
+                            <i class="fas fa-map-marker-alt" style="font-size: 30px; color: var(--gold);"></i>
+                        </div>
+                        <h3 style="font-family: 'Playfair Display'; color: var(--gold-light); font-size: 24px;">Lokasi Acara</h3>
+                        <p style="font-size: 20px; font-weight: 600;">Di Kediaman Wanita</p>
+                        <p style="opacity: 0.9; line-height: 1.6;">Jalan Pendidikan, Concong Luar</p>
+                    </div>
+                </div>
+
+                <div class="delay-3" style="margin-top: 60px; border-radius: 30px; overflow: hidden; border: 1px solid var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    <iframe src="https://www.google.com/maps?q=-0.239052,103.635860&output=embed" style="width:100%; height:350px; border:0; filter: grayscale(1) contrast(1.2) invert(0.9);" allowfullscreen=""></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP SECTION -->
+    <section class="section">
+        <div class="reveal-container">
+            <div class="card reveal">
+                <h2 class="text-reveal" style="font-family: 'Playfair Display'; color: var(--gold); font-size: 45px;"><span>RSVP & Harapan</span></h2>
+                <p class="delay-1" style="margin-bottom: 40px; font-size: 18px;">Kehadiran serta doa restu Anda adalah kehormatan bagi kami.</p>
+                
+                <div class="delay-2" style="background: rgba(255,255,255,0.02); padding: 40px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.15); box-shadow: inset 0 0 30px rgba(0,0,0,0.5);">
+                    <div class="ai-badge">SMART AI ASSISTANT</div>
+                    <p style="font-size: 14px; margin-bottom: 25px; opacity: 0.8; letter-spacing: 1px;">Biarkan AI kami merangkai kata-kata doa yang indah untuk Anda:</p>
+                    
+                    <div style="display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap;">
+                        <select id="aiTone" style="flex:2; min-width: 200px; padding: 15px; border-radius: 12px; background: #0a0a0f; color: #fff; border: 1px solid #333; font-size: 15px;">
+                            <option value="Islami">Bernuansa Islami & Berkat</option>
+                            <option value="Puitis">Sangat Puitis & Romantik</option>
+                            <option value="Santai">Akrab, Ceria & Santai</option>
+                            <option value="Formal">Sopan, Klasik & Formal</option>
+                        </select>
+                        <button onclick="generateAI()" id="aiBtn" style="flex:1; background: var(--ai-gradient); border:none; padding: 15px 30px; border-radius: 12px; cursor:pointer; font-weight: 900; color: #000; letter-spacing: 1px;">GENERATE ✨</button>
+                    </div>
+                    
+                    <textarea id="rsvpMsg" rows="5" placeholder="Tuliskan ucapan atau biarkan AI membantu..."></textarea>
+                    
+                    <button onclick="sendWA()" class="btn-primary">
+                        <i class="fab fa-whatsapp" style="margin-right: 15px; font-size: 20px;"></i> KIRIM DOA & KONFIRMASI
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 100px 20px; text-align: center; background: linear-gradient(to top, #000, transparent);">
+        <p class="reveal" style="letter-spacing: 6px; font-weight: 300; margin-bottom: 20px;">SAMPAI JUMPA DI HARI BAHAGIA KAMI</p>
+        <h2 class="reveal delay-1" style="font-family: 'Great Vibes'; font-size: 55px; color: var(--gold); margin: 15px 0;">Fitriani & Charly</h2>
+        <div class="reveal delay-2" style="width: 100px; height: 1px; background: var(--gold); margin: 30px auto; opacity: 0.5;"></div>
+        <p class="reveal delay-3" style="opacity: 0.4; font-size: 12px; letter-spacing: 2px;">DESIGNED BY AI TECHNOLOGY &copy; 2026</p>
     </footer>
 </div>
 
 <script>
 // ==========================================
-// 1. 3D FLOWER SYSTEM (THREE.JS) - FIXED
+// 1. ADVANCED SCROLL & PARALLAX
 // ==========================================
-let scene, camera, renderer, petals = [];
-let isThreeInitialized = false;
-
-function init3D() {
-    try {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-        const geometry = new THREE.PlaneGeometry(0.5, 0.5);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0xd4af37, 
-            side: THREE.DoubleSide, 
-            transparent: true, 
-            opacity: 0.6 
-        });
-
-        for(let i=0; i<50; i++) {
-            const petal = new THREE.Mesh(geometry, material);
-            resetPetal(petal);
-            scene.add(petal);
-            petals.push(petal);
-        }
-
-        camera.position.z = 5;
-        isThreeInitialized = true;
-        animate3D();
-    } catch (e) {
-        console.error("Three.js init failed", e);
-    }
-}
-
-function resetPetal(p) {
-    p.position.set(Math.random()*20-10, Math.random()*20+10, Math.random()*10-5);
-    p.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
-    p.userData = { speed: Math.random()*0.02 + 0.01, rSpeed: Math.random()*0.02 };
-}
-
-function animate3D() {
-    if (!isThreeInitialized) return;
-    requestAnimationFrame(animate3D);
-    petals.forEach(p => {
-        p.position.y -= p.userData.speed;
-        p.position.x += Math.sin(p.position.y) * 0.005;
-        p.rotation.x += p.userData.rSpeed;
-        if(p.position.y < -10) resetPetal(p);
-    });
-    renderer.render(scene, camera);
-}
-
-window.addEventListener('resize', () => {
-    // FIX: Only resize if camera and renderer are initialized
-    if (isThreeInitialized && camera && renderer) {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-});
-
-// ==========================================
-// 2. CORE LOGIC
-// ==========================================
-const params = new URLSearchParams(window.location.search);
-document.getElementById('guestName').innerText = params.get('to') || "Tamu Undangan";
-
 function startInvitation() {
     const cover = document.getElementById('cover');
     const mainContent = document.getElementById('main-content');
     const musicBtn = document.getElementById('music-toggle');
+    const heroBg = document.getElementById('hero-bg');
     
     cover.classList.add('open');
     document.body.classList.remove('locked');
     
-    // Smooth reveal
-    mainContent.style.visibility = "visible";
-    mainContent.style.opacity = "1";
-    musicBtn.style.display = "flex";
-    
+    setTimeout(() => {
+        mainContent.style.visibility = "visible";
+        mainContent.style.opacity = "1";
+        musicBtn.style.display = "flex";
+        
+        // Initial Background Scale
+        heroBg.style.transform = "scale(1.1)";
+        
+        initScrollReveal();
+    }, 500);
+
     const audio = document.getElementById('bgMusic');
-    audio.play().catch(() => console.log("Music play blocked by browser policy"));
-    
-    // Initialize 3D ONLY after cover starts opening
-    init3D();
-    initScrollReveal();
+    audio.play().catch(() => console.log("Audio interaction required"));
 }
+
+function initScrollReveal() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: stop observing once revealed for performance
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, { 
+        threshold: 0.2, // Higher threshold for more obvious animation start
+        rootMargin: "0px 0px -100px 0px"
+    });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+}
+
+// Background Parallax & Dynamic Zoom
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const heroBg = document.getElementById('hero-bg');
+    
+    // Zoom out slightly as we scroll down to reveal more photo
+    const scale = 1.1 - (scrolled * 0.0001);
+    const yPos = scrolled * 0.15;
+    
+    heroBg.style.transform = `scale(${Math.max(1, scale)}) translateY(${yPos}px)`;
+});
+
+// ==========================================
+// 2. INTERACTION & UTILS
+// ==========================================
+const params = new URLSearchParams(window.location.search);
+document.getElementById('guestName').innerText = params.get('to') || "Tamu Undangan";
 
 function toggleMusic() {
     const audio = document.getElementById('bgMusic');
     const icon = document.querySelector('#music-toggle i');
     if(audio.paused) {
         audio.play();
-        icon.className = "fas fa-music";
+        icon.classList.add('fa-spin');
     } else {
         audio.pause();
-        icon.className = "fas fa-pause";
+        icon.classList.remove('fa-spin');
     }
 }
 
-// ==========================================
-// 3. ANIMATION & TOOLS
-// ==========================================
-function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-}
-
-// Countdown
-const target = new Date("Feb 15, 2026 10:00:00").getTime();
+// Countdown Implementation
+const targetDate = new Date("Feb 15, 2026 10:00:00").getTime();
 setInterval(() => {
     const now = new Date().getTime();
-    const diff = target - now;
+    const diff = targetDate - now;
     if(diff < 0) return;
-    document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-    document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-    document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-    document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    
+    const elements = document.querySelectorAll('.cd-box span');
+    elements[0].innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+    elements[1].innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+    elements[2].innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+    elements[3].innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
 }, 1000);
 
-// AI Generator
+// ==========================================
+// 3. AI & WHATSAPP
+// ==========================================
 async function generateAI() {
     const btn = document.getElementById('aiBtn');
     const tone = document.getElementById('aiTone').value;
-    const txt = document.getElementById('rsvpMsg');
+    const txtArea = document.getElementById('rsvpMsg');
     
-    btn.innerText = "...";
+    btn.innerText = "MENGGUBAL...";
     btn.disabled = true;
 
     try {
         const apiKey = ""; 
-        const prompt = `Buatkan pesan ucapan selamat pertunangan singkat (max 2 kalimat) untuk Fitriani & Charly. Nada: ${tone}. Sertakan emoji.`;
+        const prompt = `Tuliskan doa ucapan selamat pertunangan yang sangat indah, mewah dan menyentuh hati untuk Fitriani dan Charly. Nada: ${tone}. Gunakan bahasa Indonesia yang puitis. Maksimal 3 kalimat. Tambahkan emoji cincin dan cinta yang elegan.`;
         
         const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
             method: 'POST',
@@ -504,11 +576,12 @@ async function generateAI() {
         });
 
         const data = await res.json();
-        txt.value = data.candidates[0].content.parts[0].text.trim();
+        const result = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        txtArea.value = result ? result.trim() : "Selamat ya Fitriani & Charly! Bahagia selalu selamanya! 💍✨";
     } catch(e) {
-        txt.value = "Selamat ya Fitriani & Charly! Semoga lancar sampai hari H! ✨";
+        txtArea.value = "Selamat atas pertunangan kalian, Fitriani & Charly. Semoga ikatan suci ini senantiasa diberkati Allah hingga ke pelaminan. 💍🥂";
     } finally {
-        btn.innerText = "BUAT ✨";
+        btn.innerText = "GENERATE ✨";
         btn.disabled = false;
     }
 }
@@ -516,8 +589,8 @@ async function generateAI() {
 function sendWA() {
     const msg = document.getElementById('rsvpMsg').value;
     const guest = document.getElementById('guestName').innerText;
-    const text = `Halo, saya ${guest}. Ucapan saya: ${msg}`;
-    window.open(`https://wa.me/6282261467360?text=${encodeURIComponent(text)}`);
+    const fullMessage = `Halo Fitriani & Charly,\n\nSaya ${guest} ingin mengucapkan:\n"${msg}"\n\nInsya Allah saya akan hadir di hari bahagia kalian!`;
+    window.open(`https://wa.me/6282261467360?text=${encodeURIComponent(fullMessage)}`);
 }
 </script>
 
