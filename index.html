@@ -247,6 +247,31 @@ body.locked { overflow: hidden; height: 100vh; }
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow:hidden;
+}
+
+.content{
+  position:relative;
+  z-index:2;
+}
+
+.section > div[class^="bg-"]{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
+.bg-particles{
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,215,0,.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,.05), transparent 40%);
+  animation: floatBg 20s linear infinite;
+}
+
+.bg-pulse{
+  background: radial-gradient(circle, rgba(255,215,0,.1), transparent 70%);
+  animation: pulse 6s ease-in-out infinite;
 }
 
 .card {
@@ -574,54 +599,85 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     </section>
 
     <!-- EVENT DETAILS -->
-    <section class="section">
+    <section class="section section-detail">
+  
+      <!-- WIDGET BACKGROUND -->
+      <div class="bg-particles"></div>
+    
+      <div class="content">
         <div class="reveal-container">
-            <div class="card reveal-soft">
-                <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: clamp(28px, 7vw, 40px);">Waktu & Lokasi</h2>
-                
-                <div class="event-grid stagger">
-                    <div>
-                        <i class="far fa-calendar-alt" style="font-size: 24px; color: var(--gold); margin-bottom: 15px;"></i>
-                        <h3 style="font-size: 18px; color: var(--gold-light);">Hari & Tanggal</h3>
-                        <p style="font-weight: 600;">Sabtu, 7 Februari 2026</p>
-                        <p>19.00 WIB - Selesai</p>
-                    </div>
-                    <div>
-                        <i class="fas fa-map-marker-alt" style="font-size: 24px; color: var(--gold); margin-bottom: 15px;"></i>
-                        <h3 style="font-size: 18px; color: var(--gold-light);">Lokasi Acara</h3>
-                        <p style="font-weight: 600;">Kediaman Mempelai Wanita</p>
-                        <p style="font-size: 13px;">Lokasi Acara Bahagia, Kota Anda</p>
-                    </div>
-                </div>
-
-                <div class="map-wrapper">
-                    <iframe src="https://www.google.com/maps?q=-0.239052,103.635860&output=embed" style="width:100%; height:100%; border:0; filter: grayscale(1) invert(0.9);" allowfullscreen=""></iframe>
-                </div>
+          <div class="card reveal-soft">
+    
+            <h2 class="section-title">Waktu & Lokasi</h2>
+    
+            <div class="event-grid stagger">
+              <div>
+                <i class="far fa-calendar-alt"></i>
+                <h3>Hari & Tanggal</h3>
+                <p><b>Sabtu, 7 Februari 2026</b></p>
+                <p>19.00 WIB – Selesai</p>
+              </div>
+    
+              <div>
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Lokasi Acara</h3>
+                <p><b>Kediaman Mempelai Wanita</b></p>
+                <p class="small">Lokasi Acara Bahagia, Kota Anda</p>
+              </div>
             </div>
+    
+            <div class="map-wrapper">
+              <iframe
+                src="https://www.google.com/maps?q=-0.239052,103.635860&output=embed"
+                allowfullscreen
+                loading="lazy">
+              </iframe>
+            </div>
+    
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- RSVP SECTION -->
-    <section class="section">
+    <section class="section section-rsvp">
+
+      <!-- WIDGET BACKGROUND -->
+      <div class="bg-pulse"></div>
+    
+      <div class="content">
         <div class="reveal-container">
-            <div class="card reveal-soft">
-                <h2 style="font-family: 'Playfair Display'; color: var(--gold); font-size: clamp(28px, 7vw, 40px);">RSVP & Harapan</h2>
-                
-                <div style="margin-top: 30px; text-align: left;">
-                    <div class="ai-badge">SMART AI ASSISTANT</div>
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <select id="aiTone" style="flex:1; padding: 12px; border-radius: 10px; background: #000; color: #fff; border: 1px solid #333; font-size: 12px;">
-                            <option value="Islami">Islami</option>
-                            <option value="Puitis">Puitis</option>
-                            <option value="Santai">Santai</option>
-                        </select>
-                        <button onclick="generateAI()" id="aiBtn" style="background: var(--ai-gradient); border:none; padding: 10px 15px; border-radius: 10px; font-weight: 700; font-size: 11px;">✨ BANTU</button>
-                    </div>
-                    <textarea id="rsvpMsg" rows="4" placeholder="Tulis ucapan doa..."></textarea>
-                    <button onclick="sendWA()" class="btn-primary">KIRIM VIA WHATSAPP</button>
-                </div>
+          <div class="card reveal-soft">
+    
+            <h2 class="section-title">RSVP & Harapan</h2>
+    
+            <div class="rsvp-box">
+    
+              <div class="ai-badge">SMART AI ASSISTANT</div>
+    
+              <div class="ai-control">
+                <select id="aiTone">
+                  <option value="Islami">Islami</option>
+                  <option value="Puitis">Puitis</option>
+                  <option value="Santai">Santai</option>
+                </select>
+    
+                <button onclick="generateAI()" id="aiBtn">
+                  ✨ BANTU
+                </button>
+              </div>
+    
+              <textarea id="rsvpMsg" rows="4" placeholder="Tulis ucapan doa & harapan..."></textarea>
+    
+              <button onclick="sendWA()" class="btn-primary">
+                KIRIM VIA WHATSAPP
+              </button>
+    
             </div>
+    
+          </div>
         </div>
+      </div>
     </section>
   
     <footer style="padding: 80px 20px; text-align: center; background: rgba(0,0,0,0.5);">
