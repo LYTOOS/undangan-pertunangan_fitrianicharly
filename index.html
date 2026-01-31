@@ -33,7 +33,7 @@ body {
 
 body.locked { overflow: hidden; height: 100vh; }
 
-/* Hero Photo Background */
+/* Hero Photo Background - FIXED (Tidak Bergerak) */
 #hero-bg {
   position: fixed;
   top: 0;
@@ -44,12 +44,8 @@ body.locked { overflow: hidden; height: 100vh; }
   background: linear-gradient(to bottom, rgba(5,5,7,0.3), rgba(5,5,7,0.95)), url('foto/hero.jpg');
   background-size: cover;
   background-position: center;
-  transition: transform 0.5s ease-out;
+  background-attachment: fixed; /* Memastikan background tetap diam */
 }
-
-/* ==========================================
-   NEW ULTRA LUXE ANIMATIONS
-   ========================================== */
 
 /* Perspective Wrapper for 3D feel */
 .reveal-container {
@@ -113,9 +109,7 @@ body.locked { overflow: hidden; height: 100vh; }
 .delay-3 { transition-delay: 0.6s !important; }
 .delay-4 { transition-delay: 0.8s !important; }
 
-/* ==========================================
-   COVER & GATE
-   ========================================== */
+/* COVER & GATE */
 #cover {
   position: fixed;
   inset: 0;
@@ -170,9 +164,7 @@ body.locked { overflow: hidden; height: 100vh; }
   transition: 0.4s;
 }
 
-/* ==========================================
-   SECTIONS & CARDS
-   ========================================== */
+/* SECTIONS & CARDS */
 .section {
   min-height: 100vh;
   padding: 120px 20px;
@@ -405,7 +397,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
                             <i class="far fa-calendar-alt" style="font-size: 30px; color: var(--gold);"></i>
                         </div>
                         <h3 style="font-family: 'Playfair Display'; color: var(--gold-light); font-size: 24px;">Hari & Tanggal</h3>
-                        <p style="font-size: 20px; font-weight: 600;">Sabtu, 07 Februari 2026</p>
+                        <p style="font-size: 20px; font-weight: 600;">Sabtu, 7 Februari 2026</p>
                         <p style="font-size: 18px;">Pukul 19.00 WIB - Selesai</p>
                     </div>
                     
@@ -457,22 +449,22 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
         </div>
     </section>
 
-    <footer style="padding: 60px 20px; text-align: center; background: rgba(0,0,0,0.5);">
-        <p class="fade-up" style="letter-spacing: 3px; font-weight: 300;">TERIMA KASIH</p>
-        <h2 style="font-family: 'Great Vibes'; font-size: 35px; color: var(--gold); margin: 10px 0;">Fitriani & Charly</h2>
-        <p style="opacity: 0.4; font-size: 11px; margin-top: 30px;">Created with Lytoos &copy; 2026</p>
+    <footer style="padding: 100px 20px; text-align: center; background: linear-gradient(to top, #000, transparent);">
+        <p class="reveal" style="letter-spacing: 6px; font-weight: 300; margin-bottom: 20px;">SAMPAI JUMPA DI HARI BAHAGIA KAMI</p>
+        <h2 class="reveal delay-1" style="font-family: 'Great Vibes'; font-size: 55px; color: var(--gold); margin: 15px 0;">Fitriani & Charly</h2>
+        <div class="reveal delay-2" style="width: 100px; height: 1px; background: var(--gold); margin: 30px auto; opacity: 0.5;"></div>
+        <p class="reveal delay-3" style="opacity: 0.4; font-size: 12px; letter-spacing: 2px;">DESIGNED BY LYTOOS &copy; 2026</p>
     </footer>
 </div>
 
 <script>
 // ==========================================
-// 1. ADVANCED SCROLL & PARALLAX
+// 1. ADVANCED SCROLL REVEAL
 // ==========================================
 function startInvitation() {
     const cover = document.getElementById('cover');
     const mainContent = document.getElementById('main-content');
     const musicBtn = document.getElementById('music-toggle');
-    const heroBg = document.getElementById('hero-bg');
     
     cover.classList.add('open');
     document.body.classList.remove('locked');
@@ -481,9 +473,6 @@ function startInvitation() {
         mainContent.style.visibility = "visible";
         mainContent.style.opacity = "1";
         musicBtn.style.display = "flex";
-        
-        // Initial Background Scale
-        heroBg.style.transform = "scale(1.1)";
         
         initScrollReveal();
     }, 500);
@@ -497,29 +486,15 @@ function initScrollReveal() {
         entries.forEach(entry => {
             if(entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // Optional: stop observing once revealed for performance
-                // observer.unobserve(entry.target);
             }
         });
     }, { 
-        threshold: 0.2, // Higher threshold for more obvious animation start
+        threshold: 0.2, 
         rootMargin: "0px 0px -100px 0px"
     });
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 }
-
-// Background Parallax & Dynamic Zoom
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroBg = document.getElementById('hero-bg');
-    
-    // Zoom out slightly as we scroll down to reveal more photo
-    const scale = 1.1 - (scrolled * 0.0001);
-    const yPos = scrolled * 0.15;
-    
-    heroBg.style.transform = `scale(${Math.max(1, scale)}) translateY(${yPos}px)`;
-});
 
 // ==========================================
 // 2. INTERACTION & UTILS
@@ -539,8 +514,8 @@ function toggleMusic() {
     }
 }
 
-// Countdown Implementation
-const targetDate = new Date("Feb 15, 2026 10:00:00").getTime();
+// Countdown Implementation - Updated to Feb 7, 2026
+const targetDate = new Date("Feb 7, 2026 19:00:00").getTime();
 setInterval(() => {
     const now = new Date().getTime();
     const diff = targetDate - now;
