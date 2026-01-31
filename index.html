@@ -368,14 +368,21 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
 <div id="main-content" style="opacity:0; visibility: hidden; transition: 1.5s;">
     
     <!-- HERO SECTION -->
-    <section class="section hero">
+    <section class="section hero" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
         <div class="reveal-container">
             <div class="reveal">
-                <h3 style="letter-spacing: 5px; font-weight: 300;">KAMI AKAN MENGIKAT JANJI</h3>
-                <h1 class="delay-1">Fitriani & Charly</h1>
-                <p class="delay-2" style="letter-spacing: 3px; color: var(--gold-light);">07 . 02 . 2026</p>
+                <h3 style="letter-spacing: 5px; font-weight: 300; margin-bottom: 10px;">KAMI AKAN MENGIKAT JANJI</h3>
                 
-                <div class="countdown-container delay-3" id="timer">
+                <!-- TATA LETAK NAMA BERTUMPUK -->
+                <div class="hero-names">
+                    <span class="name delay-1">Fitriani</span>
+                    <span class="amp delay-2">&</span>
+                    <span class="name delay-3">Charly</span>
+                </div>
+
+                <p style="letter-spacing: 3px; color: var(--gold-light); margin-top: 10px;">07 . 02 . 2026</p>
+                
+                <div class="countdown-container" id="timer">
                     <div class="cd-box"><span>00</span><small>HARI</small></div>
                     <div class="cd-box"><span>00</span><small>JAM</small></div>
                     <div class="cd-box"><span>00</span><small>MENIT</small></div>
