@@ -121,14 +121,16 @@ body.locked { overflow: hidden; height: 100vh; }
   transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.active .reveal-left, .active .reveal-right {
+.reveal-left.active,
+.reveal-right.active {
   opacity: 1;
   transform: translateX(0) rotateY(0);
 }
 
-@media (max-width: 768px) {
-  .reveal-left, .reveal-right {
-    transform: translateY(60px) !important;
+@media(max-width:768px){
+  .reveal-left,
+  .reveal-right{
+    transform: translateY(60px);
   }
 }
 
@@ -456,13 +458,13 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
   opacity: 0;
   transform: translateY(40px);
 }
-.active.stagger > * {
+.stagger.active > * {
   animation: staggerIn 1s ease forwards;
 }
-.active.stagger > *:nth-child(1){animation-delay:.2s}
-.active.stagger > *:nth-child(2){animation-delay:.4s}
-.active.stagger > *:nth-child(3){animation-delay:.6s}
-.active.stagger > *:nth-child(4){animation-delay:.8s}
+.stagger.active > *:nth-child(1){animation-delay:.2s}
+.stagger.active > *:nth-child(2){animation-delay:.4s}
+.stagger.active > *:nth-child(3){animation-delay:.6s}
+.stagger.active > *:nth-child(4){animation-delay:.8s}
 
 @keyframes staggerIn {
   to {
@@ -510,7 +512,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
                 </h3>
                 
                 <!-- TATA LETAK NAMA BERTUMPUK -->
-                <div class="hero-names stagger">
+                <div class="hero-names stagger reveal">
                     <span class="name delay-1">Fitriani</span>
                     <span class="amp delay-2">&</span>
                     <span class="name delay-3">Charly</span>
@@ -551,7 +553,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
                 <p style="font-size: 13px; margin-bottom: 30px;">Assalamu'alaikum Wr. Wb. Dengan memohon rahmat Allah SWT, kami mengundang Bapak/Ibu/Saudara/i ke acara pertunangan kami:</p>
                 
                 <div class="couple-wrap">
-                    <div class="person reveal-left">
+                   <div class="person reveal reveal-left">
                         <img src="foto/fitriani.jpg" class="photo-premium float-slow">
                         <h3 style="font-family: 'Great Vibes'; font-size: 40px; color: var(--gold-light); margin: 15px 0 5px;">Fitriani</h3>
                         <p style="font-size: 11px; color: var(--muted); letter-spacing: 2px;">Putri Pertama dari</p>
@@ -560,7 +562,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
                     
                     <div class="delay-1" style="font-size: 40px; color: var(--gold); font-family: 'Great Vibes';">&</div>
                     
-                    <div class="person reveal-right">
+                    <div class="person reveal reveal-right">
                         <img src="foto/charly.jpg" class="photo-premium float-slow">
                         <h3 style="font-family: 'Great Vibes'; font-size: 40px; color: var(--gold-light); margin: 15px 0 5px;">Charly</h3>
                         <p style="font-size: 11px; color: var(--muted); letter-spacing: 2px;">Putra Pertama dari</p>
@@ -653,18 +655,18 @@ function startInvitation() {
 }
 
 function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if(entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { 
-        threshold: 0.2, 
-        rootMargin: "0px 0px -100px 0px"
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
     });
+  },{ threshold:0.15 });
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-quote')
+  document.querySelectorAll(
+    '.reveal, .reveal-left, .reveal-right, .reveal-soft, .reveal-quote, .stagger'
+  ).forEach(el=>observer.observe(el));
 }
 
 // ==========================================
