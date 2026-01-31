@@ -745,7 +745,7 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
                 </select>
     
                 <button onclick="generateAI()" id="aiBtn">
-                  ✨ BANTU
+                  BANTU
                 </button>
               </div>
     
@@ -844,24 +844,34 @@ setInterval(() => {
 // ==========================================
 async function generateAI() {
   const tone = document.getElementById("aiTone").value;
-  const txt = document.getElementById("rsvpMsg");
+  const textarea = document.getElementById("rsvpMsg");
   const btn = document.getElementById("aiBtn");
 
-  btn.innerText = "MENULIS DOA...";
+  const guest =
+    new URLSearchParams(window.location.search).get("to") ||
+    "Tamu Undangan";
+
+  btn.innerText = "⏳ Membuat ucapan...";
   btn.disabled = true;
 
   try {
-    const res = await fetch("https://ai-undangan.charlyhandani2824.workers.dev", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tone })
-    });
+    const res = await fetch(
+      "https://ai-undangan.charlyhandani2824.workers.dev",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tone: tone,
+          name: guest
+        })
+      }
+    );
 
     const data = await res.json();
-    txt.value = data.result;
+    textarea.value = data.result;
 
   } catch (e) {
-    txt.value = "Semoga Allah memberkahi ikatan ini hingga hari bahagia. 💍";
+    textarea.value = "Semoga Allah memberkahi langkah indah kalian.";
   }
 
   btn.innerText = "BANTU";
@@ -869,10 +879,22 @@ async function generateAI() {
 }
   
 function sendWA() {
-    const msg = document.getElementById('rsvpMsg').value;
-    const guest = document.getElementById('guestName').innerText;
-    const fullMessage = `Halo Fitriani & Charly,\n\nSaya ${guest} ingin mengucapkan:\n"${msg}"\n\nInsya Allah saya akan hadir di hari bahagia kalian!`;
-    window.open(`https://wa.me/6282261467360?text=${encodeURIComponent(fullMessage)}`);
+  const msg = document.getElementById("rsvpMsg").value;
+  const guest =
+    new URLSearchParams(window.location.search).get("to") ||
+    "Tamu Undangan";
+
+  const phone = "6282261467360";
+
+  const text =
+    `Konfirmasi Kehadiran\n\n` +
+    `Nama: ${guest}\n\n` +
+    `Ucapan:\n${msg}`;
+
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,
+    "_blank"
+  );
 }
 </script>
 
