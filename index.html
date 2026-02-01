@@ -654,8 +654,8 @@ textarea {
 // 1. ANIMATION & LOGIC
 // ==========================================
 const params = new URLSearchParams(window.location.search);
-const guest = params.get('to') || "Tamu Undangan";
-document.getElementById('guestName').innerText = guest;
+window.guest = params.get('to') || "Tamu Undangan";
+document.getElementById('guestName').innerText = window.guest;
 
 document.getElementById("openBtn").addEventListener("click", startInvitation);
 
@@ -755,24 +755,35 @@ async function generateAI() {
   btn.disabled = false;
 }
   
-async function saveRSVP() {
-  const tone = document.getElementById("aiTone").value;
-  const msg = document.getElementById("rsvpMsg").value;
-
-  if (!msg) return alert("Isi ucapan dulu 🙏");
-
+async function saveRSVP(message) {
   await fetch("https://ai-undangan.charlyhandani2824.workers.dev", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      names: "Fitriani & Charly",
-      tone,
-      message: msg
+      guest: window.guest,
+      tone: document.getElementById("aiTone").value,
+      message,
+      source: "manual"
     })
   });
+}
 
-  alert("Ucapan berhasil dikirim 🤍");
-  document.getElementById("rsvpMsg").value = "";
+async function sendWA() {
+  const msg = document.getElementById("rsvpMsg").value.trim();
+  if (!msg) {
+    alert("Ucapan masih kosong 🙏");
+    return;
+  }
+
+  await saveRSVP(msg); // 🔥 SIMPAN KE FIREBASE
+
+  const phone = "6282261467360";
+  const text = `Halo, saya ${window.guest}.\n\nUcapan:\n${msg}\n\nKonfirmasi: Hadir`;
+
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,
+    "_blank"
+  );
 }
 </script>
 
