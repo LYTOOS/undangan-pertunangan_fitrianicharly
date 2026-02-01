@@ -633,7 +633,7 @@ textarea {
               
               <textarea id="rsvpMsg" rows="4" placeholder="Tulis ucapan doa & harapan..."></textarea>
               
-              <button onclick="sendWA()" class="btn-primary">
+              <button onclick="saveRSVP()" class="btn-primary">
                 KIRIM VIA WHATSAPP
               </button>
             </div>
@@ -727,18 +727,18 @@ async function generateAI() {
   const textarea = document.getElementById("rsvpMsg");
   const btn = document.getElementById("aiBtn");
 
-  btn.innerText = "⏳ MEMBUAT...";
+  btn.innerText = "⏳...";
   btn.disabled = true;
 
   try {
     const res = await fetch(
-      "https://ai-undangan.charlyhandani2824.workers.dev/generate",
+      "https://ai-undangan.charlyhandani2824.workers.dev",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           tone,
-          names: "Fitriani & Charly"
+          guest: document.getElementById("guestName").innerText
         })
       }
     );
@@ -747,19 +747,32 @@ async function generateAI() {
     textarea.value = data.text;
 
   } catch (e) {
-    textarea.value = "Semoga Fitriani & Charly selalu dalam lindungan Allah dan bahagia.";
+    textarea.value =
+      "Selamat berbahagia Fitriani & Charly, semoga selalu dilimpahi kebahagiaan.";
   }
 
   btn.innerText = "BANTU";
   btn.disabled = false;
 }
   
-function sendWA() {
+async function saveRSVP() {
+  const tone = document.getElementById("aiTone").value;
   const msg = document.getElementById("rsvpMsg").value;
-  const phone = "6282261467360";
-  const text = `Halo, saya ${guest}.\nUcapan: ${msg}\nKonfirmasi: Hadir`;
 
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+  if (!msg) return alert("Isi ucapan dulu 🙏");
+
+  await fetch("https://ai-undangan.charlyhandani2824.workers.dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      names: "Fitriani & Charly",
+      tone,
+      message: msg
+    })
+  });
+
+  alert("Ucapan berhasil dikirim 🤍");
+  document.getElementById("rsvpMsg").value = "";
 }
 </script>
 
