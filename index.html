@@ -723,36 +723,24 @@ setInterval(() => {
 // 2. AI GENERATOR (Gemini API)
 // ==========================================
 async function generateAI() {
-  const tone = document.getElementById("aiTone").value;
-  const textarea = document.getElementById("rsvpMsg");
-  const btn = document.getElementById("aiBtn");
+  const tone = aiTone.value;
+  aiBtn.innerText = "⏳";
+  aiBtn.disabled = true;
 
-  btn.innerText = "⏳...";
-  btn.disabled = true;
+  const res = await fetch("https://ai-undangan.charlyhandani2824.workers.dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      guest: window.guest,
+      tone
+    })
+  });
 
-  try {
-    const res = await fetch(
-      "https://ai-undangan.charlyhandani2824.workers.dev",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          tone,
-          guest: document.getElementById("guestName").innerText
-        })
-      }
-    );
+  const data = await res.json();
+  rsvpMsg.value = data.text;
 
-    const data = await res.json();
-    textarea.value = data.text;
-
-  } catch (e) {
-    textarea.value =
-      "Selamat berbahagia Fitriani & Charly, semoga selalu dilimpahi kebahagiaan.";
-  }
-
-  btn.innerText = "BANTU";
-  btn.disabled = false;
+  aiBtn.innerText = "BANTU";
+  aiBtn.disabled = false;
 }
   
 async function saveRSVP(message) {
