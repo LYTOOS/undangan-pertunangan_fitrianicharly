@@ -12,6 +12,7 @@
 
 <style>
 :root {
+  --bg: #f9f9f9;
   --card: rgba(10, 10, 15, 0.85);
   --gold: #d4af37;
   --gold-light: #f5e6b8;
@@ -40,13 +41,16 @@ body.locked { overflow: hidden; height: 100vh; }
 
 /* Hero Photo Background - FIXED (Tidak Bergerak) */
 #hero-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background:
     linear-gradient(
       to bottom,
-      rgba(5,5,7,0.2),
-      rgba(5,5,7,0.7)
+      rgba(255,255,255,0.6),
+      rgba(255,255,255,0.95)
     ),
-    url('foto/hero.jpg');
+    url('foto/hero.jpg') center/cover no-repeat;
 }
 
 /* Perspective Wrapper for 3D feel */
@@ -331,9 +335,6 @@ body.locked { overflow: hidden; height: 100vh; }
   to{opacity:1; transform:scale(1)}
 }
 
-.section-doa{
-  background:linear-gradient(180deg,#000,#111);
-}
 .section-doa .content{
   animation: fadeHoly 1.2s ease both;
 }
@@ -344,7 +345,7 @@ body.locked { overflow: hidden; height: 100vh; }
 
 .card {
   background: var(--card);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(12px);
   padding: clamp(30px, 8vw, 60px) clamp(15px, 5vw, 40px);
   border-radius: 30px;
   border: 1px solid rgba(212, 175, 55, 0.15);
@@ -564,6 +565,10 @@ textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 20px 
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+body, .section {
+  background: #f9f9f9 !important;
 }
 
 </style>
