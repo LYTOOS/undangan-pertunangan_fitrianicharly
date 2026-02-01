@@ -48,11 +48,10 @@ body.locked { overflow: hidden; height: 100vh; }
   background:
     linear-gradient(
       to bottom,
-      rgba(0,0,0,0.5),
-      rgba(0,0,0,0.95)
+      rgba(0,0,0,0.25),
+      rgba(0,0,0,0.75)
     ),
     url('foto/hero.jpg') center/cover no-repeat;
-  background-attachment: fixed;
 }
 
 /* Perspective Wrapper for 3D feel */
@@ -454,9 +453,8 @@ textarea {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Override background putih */
-body, .section {
-  background: #050507 !important;
+.section {
+  background: transparent;
 }
 
 </style>
@@ -729,24 +727,27 @@ async function generateAI() {
   const textarea = document.getElementById("rsvpMsg");
   const btn = document.getElementById("aiBtn");
 
-  btn.innerText = "⏳...";
+  btn.innerText = "⏳ MEMBUAT...";
   btn.disabled = true;
 
   try {
-    const apiKey = ""; // Disediakan oleh sistem
-    const prompt = `Buatkan ucapan selamat pertunangan singkat (max 2 kalimat) untuk Fitriani & Charly. Nada: ${tone}. Bahasa Indonesia.`;
-    
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-    });
+    const res = await fetch(
+      "https://ai-undangan.charlyhandani2824.workers.dev/generate",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tone,
+          names: "Fitriani & Charly"
+        })
+      }
+    );
 
     const data = await res.json();
-    textarea.value = data.candidates[0].content.parts[0].text;
+    textarea.value = data.text;
 
   } catch (e) {
-    textarea.value = "Selamat berbahagia Fitriani & Charly! Semoga lancar sampai hari H.";
+    textarea.value = "Semoga Fitriani & Charly selalu dalam lindungan Allah dan bahagia.";
   }
 
   btn.innerText = "BANTU";
