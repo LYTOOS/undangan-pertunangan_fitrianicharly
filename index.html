@@ -472,6 +472,25 @@ textarea {
   background: transparent;
 }
 
+.ucapan-list {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ucapan-item {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,215,128,0.25);
+  border-radius: 16px;
+  padding: 16px;
+  animation: fadeUp .6s ease;
+}
+
+.ucapan-item p {
+  font-size: 13px;
+  line-height: 1.6;
+}
 </style>
 </head>
 <body class="locked">
@@ -747,7 +766,9 @@ async function generateUcapanAI() {
     const res = await fetch("https://undangan-ai-pages.pages.dev/ai", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-store"
       },
       body: JSON.stringify({
         guest: "Tamu Undangan",
@@ -759,6 +780,17 @@ async function generateUcapanAI() {
 
     const data = await res.json();
     textarea.value = data.text;
+
+    const list = document.getElementById("ucapanList");
+
+    const item = document.createElement("div");
+    item.className = "ucapan-item reveal-soft";
+    item.innerHTML = `
+      <strong>${tone}</strong>
+      <p>${data.text}</p>
+    `;
+    
+    list.prepend(item);
 
   } catch (err) {
     textarea.value = "❌ Gagal memuat AI. Coba lagi.";
