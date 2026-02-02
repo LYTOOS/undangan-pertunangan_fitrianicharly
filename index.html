@@ -723,32 +723,29 @@ setInterval(() => {
 // 2. AI GENERATOR (Gemini API)
 // ==========================================
 async function generateUcapanAI() {
-  const guest = document.getElementById("rsvp-name").value;
-  const tone = document.getElementById("rsvp-tone").value;
+  const tone = document.getElementById("aiTone").value;
+  const textarea = document.getElementById("rsvpMsg");
 
-  const res = await fetch("https://undangan-ai-pages.pages.dev/ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ guest, tone })
-  });
+  textarea.value = "⏳ AI sedang menulis ucapan...";
 
-  const data = await res.json();
+  try {
+    const res = await fetch("https://undangan-ai-pages.pages.dev/ai", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        guest: window.guest || "Tamu Undangan",
+        tone: tone
+      })
+    });
 
-  document.getElementById("rsvp-message").value = data.text;
+    const data = await res.json();
+
+    textarea.value = data.text || "🤍 Semoga Allah memberkahi langkah indah kalian.";
+  } catch (err) {
+    console.error(err);
+    textarea.value = "❌ Gagal memuat AI. Coba lagi.";
+  }
 }
-  
-fetch("https://undangan-ai.pages.dev/ai", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    guest: namaTamu,
-    tone: tone
-  })
-})
-.then(res => res.json())
-.then(data => {
-  document.getElementById("rsvpMsg").value = data.text;
-});
 
 async function sendWA() {
   const msg = document.getElementById("rsvpMsg").value.trim();
