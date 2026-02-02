@@ -747,6 +747,19 @@ async function generateUcapanAI() {
   }
 }
 
+  async function saveRSVP(message) {
+  await fetch("https://undangan-ai-pages.pages.dev/ai", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      guest: window.guest || "Tamu Undangan",
+      tone: document.getElementById("aiTone").value,
+      message: message,
+      source: "manual"
+    })
+  });
+}
+
 async function sendWA() {
   const msg = document.getElementById("rsvpMsg").value.trim();
   if (!msg) {
@@ -754,7 +767,7 @@ async function sendWA() {
     return;
   }
 
-  await saveRSVP(msg); // 🔥 SIMPAN KE FIREBASE
+  await saveRSVP(msg); // ✅ SIMPAN DULU
 
   const phone = "6282261467360";
   const text = `Halo, saya ${window.guest}.\n\nUcapan:\n${msg}\n\nKonfirmasi: Hadir`;
