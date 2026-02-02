@@ -743,19 +743,18 @@ async function generateAI() {
   aiBtn.disabled = false;
 }
   
-async function saveRSVP(message) {
-  await fetch("https://undangan-ai.pages.dev/ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      guest: namaTamu,
-      tone: tone
-    })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("rsvpMsg").value = data.text;
-  });
-}
+fetch("https://undangan-ai.pages.dev/ai", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    guest: namaTamu,
+    tone: tone
+  })
+})
+.then(res => res.json())
+.then(data => {
+  document.getElementById("rsvpMsg").value = data.text;
+});
 
 async function sendWA() {
   const msg = document.getElementById("rsvpMsg").value.trim();
