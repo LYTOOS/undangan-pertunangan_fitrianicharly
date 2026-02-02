@@ -626,8 +626,8 @@ textarea {
                   <option value="Puitis">Puitis</option>
                   <option value="Santai">Santai</option>
                 </select>
-                <button onclick="generateAI()" id="aiBtn">
-                  BANTU
+                <button onclick="generateUcapanAI()">
+                  Buatkan Ucapan AI
                 </button>
               </div>
               
@@ -722,25 +722,19 @@ setInterval(() => {
 // ==========================================
 // 2. AI GENERATOR (Gemini API)
 // ==========================================
-async function generateAI() {
-  const tone = aiTone.value;
-  aiBtn.innerText = "⏳";
-  aiBtn.disabled = true;
+async function generateUcapanAI() {
+  const guest = document.getElementById("rsvp-name").value;
+  const tone = document.getElementById("rsvp-tone").value;
 
-  const res = await fetch("https://undangan-ai.pages.dev/ai", {
+  const res = await fetch("https://xxxx.pages.dev/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      guest: window.guest,
-      tone
-    })
+    body: JSON.stringify({ guest, tone })
   });
 
   const data = await res.json();
-  rsvpMsg.value = data.text;
 
-  aiBtn.innerText = "BANTU";
-  aiBtn.disabled = false;
+  document.getElementById("rsvp-message").value = data.text;
 }
   
 fetch("https://undangan-ai.pages.dev/ai", {
