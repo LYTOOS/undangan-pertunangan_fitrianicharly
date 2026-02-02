@@ -626,7 +626,7 @@ textarea {
                   <option value="Puitis">Puitis</option>
                   <option value="Santai">Santai</option>
                 </select>
-                <button onclick="generateUcapanAI()">
+                <button onclick="generateUcapanAI()" id="aiBtn">
                   Buatkan Ucapan AI
                 </button>
               </div>
@@ -726,7 +726,7 @@ async function generateUcapanAI() {
   const guest = document.getElementById("rsvp-name").value;
   const tone = document.getElementById("rsvp-tone").value;
 
-  const res = await fetch("https://xxxx.pages.dev/ai", {
+  const res = await fetch("https://undangan-ai-pages.pages.dev/ai", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ guest, tone })
